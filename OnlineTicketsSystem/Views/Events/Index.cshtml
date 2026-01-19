@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model IEnumerable<OnlineTicketsSystem.Models.Event>
+
+<h1>Събития</h1>
+
+<form method="get">
+    <input type="text" name="category" placeholder="Категория" />
+    <input type="text" name="city" placeholder="Град" />
+    <input type="date" name="date" />
+    <button type="submit">Търси</button>
+</form>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Title</th>
+        <th>City</th>
+        <th>Venue</th>
+        <th>Category</th>
+        <th>Date</th>
+        <th>Детайли</th>
+    </tr>
+    @foreach (var e in Model)
+    {
+        <tr>
+            <td>@e.Title</td>
+            <td>@e.City</td>
+            <td>@e.Venue</td>
+            <td>@e.Category.Name</td>
+            <td>@e.Date.ToShortDateString()</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@e.Id">Виж</a>
+            </td>
+        </tr>
+    }
+</table>
+
