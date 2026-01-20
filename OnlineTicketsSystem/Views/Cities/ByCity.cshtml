@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<OnlineTicketsSystem.Models.Event>
+
+<h1>Събития в @ViewData["CityName"]</h1>
+
+@if (!Model.Any())
+{
+    <p>Няма налични събития за този град.</p>
+}
+else
+{
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Заглавие</th>
+            <th>Място</th>
+            <th>Категория</th>
+            <th>Дата</th>
+            <th></th>
+        </tr>
+
+        @foreach (var e in Model)
+        {
+            <tr>
+                <td>@e.Title</td>
+                <td>@e.Venue</td>
+                <td>@e.Category?.Name</td>
+                <td>@e.Date.ToShortDateString()</td>
+                <td>
+                    <a asp-controller="Events" asp-action="Details" asp-route-id="@e.Id">Детайли</a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+

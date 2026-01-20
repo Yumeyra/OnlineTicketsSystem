@@ -30,40 +30,146 @@ namespace OnlineTicketsSystem.Data
                     context.SaveChanges();
                 }
 
-                // --- Събития ---
-                if (!context.Events.Any())
-                {
-                    var events = new Event[]
-                    {
-                        new Event
-                        {
-                            Title = "Концерт на популярна група",
-                            Description = "Музика на живо в Разград",
-                            City = "Разград",
-                            Venue = "Общински културен център",
-                            Date = DateTime.Now.AddDays(10),
-                            Capacity = 100,
-                            ImageUrl = "",
-                            CategoryId = context.Categories.First(c => c.Name == "Концерт").Id
-                        },
-                        new Event
-                        {
-                            Title = "Театрална постановка",
-                            Description = "Драма в Пловдив",
-                            City = "Пловдив",
-                            Venue = "Античен театър",
-                            Date = DateTime.Now.AddDays(15),
-                            Capacity = 50,
-                            ImageUrl = "",
-                            CategoryId = context.Categories.First(c => c.Name == "Театър").Id
-                        }
-                    };
-                    context.Events.AddRange(events);
-                    context.SaveChanges();
-                }
+                //// --- Събития ---
+                //if (!context.Events.Any())
+                //{
+                //    var events = new Event[]
+                //    {
+                //        new Event
+                //        {
+                //            Title = "Концерт на популярна група",
+                //            Description = "Музика на живо в Разград",
+                //            City = "Разград",
+                //            Venue = "Общински културен център",
+                //            Date = DateTime.Now.AddDays(10),
+                //            Capacity = 100,
+                //            ImageUrl = "",
+                //            CategoryId = context.Categories.First(c => c.Name == "Концерт").Id
+                //        },
+                //        new Event
+                //        {
+                //            Title = "Театрална постановка",
+                //            Description = "Драма в Пловдив",
+                //            City = "Пловдив",
+                //            Venue = "Античен театър",
+                //            Date = DateTime.Now.AddDays(15),
+                //            Capacity = 50,
+                //            ImageUrl = "",
+                //            CategoryId = context.Categories.First(c => c.Name == "Театър").Id
+                //        }
+                //    };
+                //    context.Events.AddRange(events);
+                //    context.SaveChanges();
+                //}
+            // --- Събития ---
+            var eventsToSeed = new List<Event>
+{
+    new Event
+    {
+        Title = "Рок концерт на открито",
+        Description = "Голям рок концерт в центъра на София",
+        City = "София",
+        Venue = "Арена София",
+        Date = DateTime.Now.AddDays(20),
+        Capacity = 500,
+        ImageUrl = "",
+        CategoryId = context.Categories.First(c => c.Name == "Концерт").Id
+    },
+    new Event
+    {
+        Title = "Футболен мач",
+        Description = "Дерби мач от първа лига",
+        City = "Пловдив",
+        Venue = "Стадион Пловдив",
+        Date = DateTime.Now.AddDays(12),
+        Capacity = 800,
+        ImageUrl = "",
+        CategoryId = context.Categories.First(c => c.Name == "Спорт").Id
+    },
+    new Event
+    {
+        Title = "Театрална комедия",
+        Description = "Комедийна постановка",
+        City = "Варна",
+        Venue = "Драматичен театър",
+        Date = DateTime.Now.AddDays(18),
+        Capacity = 200,
+        ImageUrl = "",
+        CategoryId = context.Categories.First(c => c.Name == "Театър").Id
+    },
+    new Event
+    {
+        Title = "Кино премиера",
+        Description = "Премиера на нов български филм",
+        City = "Бургас",
+        Venue = "Cinema City",
+        Date = DateTime.Now.AddDays(7),
+        Capacity = 150,
+        ImageUrl = "",
+        CategoryId = context.Categories.First(c => c.Name == "Кино").Id
+    },
+    new Event
+    {
+        Title = "Джаз вечер",
+        Description = "Джаз концерт на живо",
+        City = "Русе",
+        Venue = "Културен дом",
+        Date = DateTime.Now.AddDays(25),
+        Capacity = 120,
+        ImageUrl = "",
+        CategoryId = context.Categories.First(c => c.Name == "Концерт").Id
+    },
+    new Event
+    {
+        Title = "Балетно представление",
+        Description = "Класически балет",
+        City = "Стара Загора",
+        Venue = "Опера Стара Загора",
+        Date = DateTime.Now.AddDays(30),
+        Capacity = 300,
+        ImageUrl = "",
+        CategoryId = context.Categories.First(c => c.Name == "Театър").Id
+    },
+    new Event
+    {
+        Title = "Баскетболен турнир",
+        Description = "Регионален турнир",
+        City = "Плевен",
+        Venue = "Спортна зала Плевен",
+        Date = DateTime.Now.AddDays(14),
+        Capacity = 400,
+        ImageUrl = "",
+        CategoryId = context.Categories.First(c => c.Name == "Спорт").Id
+    },
+    new Event
+    {
+        Title = "Фестивал на изкуствата",
+        Description = "Изложби и музика",
+        City = "Велико Търново",
+        Venue = "Стария град",
+        Date = DateTime.Now.AddDays(40),
+        Capacity = 600,
+        ImageUrl = "",
+        CategoryId = context.Categories.First(c => c.Name == "Концерт").Id
+    }
+};
 
-                // --- Тестов потребител ---
-                var existingUser = userManager.FindByEmailAsync("testuser@example.com").Result;
+            // добавяме само тези, които ги няма
+            foreach (var ev in eventsToSeed)
+            {
+                if (!context.Events.Any(e => e.Title == ev.Title))
+                {
+                    context.Events.Add(ev);
+                }
+            }
+
+            context.SaveChanges();
+
+
+
+
+            // --- Тестов потребител ---
+            var existingUser = userManager.FindByEmailAsync("testuser@example.com").Result;
                 IdentityUser testUser;
                 if (existingUser == null)
                 {

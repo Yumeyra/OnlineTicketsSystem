@@ -2,6 +2,10 @@
 using OnlineTicketsSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using OnlineTicketsSystem.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using OnlineTicketsSystem.ViewModels;
+
 
 namespace OnlineTicketsSystem.Controllers
 {
@@ -41,8 +45,72 @@ namespace OnlineTicketsSystem.Controllers
             if (ev == null)
                 return NotFound();
 
-            return View(ev);
+            var sold = await _context.Tickets.CountAsync(t => t.EventId == id);
+            var remaining = ev.Capacity - sold;
+
+            var vm = new EventDetailsViewModel
+            {
+                Event = ev,
+                SoldTickets = sold,
+                RemainingSeats = remaining
+            };
+
+            return View(vm);
+        }
+
+
+            [Authorize]
+            [HttpPost]
+            [ValidateAntiForgeryToken]
+            public async Task<IActionResult> BuyTicket(int id, int quantity = 1)
+            {
+                if (quantity < 1) quantity = 1;
+                if (quantity > 10) quantity = 10; // лимит за сигурност (може да го махнеш)
+
+                var ev = await _context.Events
+                    .Include(e => e.Category)
+                    .FirstOrDefaultAsync(e => e.Id == id);
+
+                if (ev == null)
+                    return NotFound();
+
+                // Колко билета вече са купени за това събитие
+                var sold = await _context.Tickets.CountAsync(t => t.EventId == id);
+
+                // Свободни места
+                var remaining = ev.Capacity - sold;
+
+                if (remaining <= 0)
+                {
+                    TempData["Message"] = "Събитието е разпродадено. Няма свободни места.";
+                    return RedirectToAction("Details", new { id });
+                }
+
+                if (quantity > remaining)
+                {
+                    TempData["Message"] = $"Няма достатъчно свободни места. Остават: {remaining}.";
+                    return RedirectToAction("Details", new { id });
+                }
+
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                // Добавяме quantity на брой билети (редове)
+                for (int i = 0; i < quantity; i++)
+                {
+                    _context.Tickets.Add(new Ticket
+                    {
+                        EventId = id,
+                        UserId = userId,
+                        PurchaseDate = DateTime.Now
+                    });
+                }
+
+                await _context.SaveChangesAsync();
+
+                TempData["Message"] = $"Успешно закупихте {quantity} билет(а).";
+                return RedirectToAction("Details", new { id });
+            }
+
         }
     }
-}
 
