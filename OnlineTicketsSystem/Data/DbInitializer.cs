@@ -2,19 +2,27 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using OnlineTicketsSystem.Models;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Linq;
+
 
 
 namespace OnlineTicketsSystem.Data
 {
     public class DbInitializer
     {
-        public static void Seed(IServiceProvider serviceProvider)
+        public static async Task SeedAsync(IServiceProvider serviceProvider)
         {
             using (var scope = serviceProvider.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<ApplicationDbContext>();
                 var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+
+
 
                 // --- Категории ---
                 if (!context.Categories.Any())
@@ -61,6 +69,8 @@ namespace OnlineTicketsSystem.Data
                 //    context.Events.AddRange(events);
                 //    context.SaveChanges();
                 //}
+
+
             // --- Събития ---
             var eventsToSeed = new List<Event>
 {
@@ -165,11 +175,48 @@ namespace OnlineTicketsSystem.Data
 
             context.SaveChanges();
 
+                // --- Роли ---
+                if (!await roleManager.RoleExistsAsync("Admin"))
+                {
+                    await roleManager.CreateAsync(new IdentityRole("Admin"));
+                }
+
+                if (!await roleManager.RoleExistsAsync("User"))
+                {
+                    await roleManager.CreateAsync(new IdentityRole("User"));
+                }
+
+                // --- Админ потребител ---
+                var adminEmail = "admin@tickets.com";
+                var adminUser = await userManager.FindByEmailAsync(adminEmail);
+
+                if (adminUser == null)
+                {
+                    adminUser = new IdentityUser
+                    {
+                        UserName = adminEmail,
+                        Email = adminEmail,
+                        EmailConfirmed = true
+                    };
+
+                    var createAdmin = await userManager.CreateAsync(adminUser, "Admin123!");
+                    if (!createAdmin.Succeeded)
+                    {
+                        foreach (var error in createAdmin.Errors)
+                            Console.WriteLine($"Admin create error: {error.Description}");
+                    }
+                }
+
+                // Даваме Admin роля
+                if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+                {
+                    await userManager.AddToRoleAsync(adminUser, "Admin");
+                }
 
 
 
-            // --- Тестов потребител ---
-            var existingUser = userManager.FindByEmailAsync("testuser@example.com").Result;
+                // --- Тестов потребител ---
+                var existingUser = userManager.FindByEmailAsync("testuser@example.com").Result;
                 IdentityUser testUser;
                 if (existingUser == null)
                 {

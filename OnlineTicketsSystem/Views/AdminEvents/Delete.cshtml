@@ -1,0 +1,23 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model OnlineTicketsSystem.Models.Event
+
+<h1>Изтриване</h1>
+
+<p>Сигурна ли си, че искаш да изтриеш:</p>
+<ul>
+    <li><b>@Model.Title</b></li>
+    <li>@Model.City - @Model.Venue</li>
+    <li>@Model.Date.ToShortDateString()</li>
+</ul>
+
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <button class="btn btn-danger" type="submit">Изтрий</button>
+    <a class="btn btn-secondary" asp-action="Index">Отказ</a>
+</form>
+

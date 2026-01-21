@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
+
 namespace OnlineTicketsSystem.Models
 {
     public class Event
@@ -23,8 +24,11 @@ namespace OnlineTicketsSystem.Models
             [Required]
             public DateTime Date { get; set; }
 
-            [Required]
-            public int Capacity { get; set; }
+            
+        [Required]
+        [Range(1, 100000)]
+        public int Capacity { get; set; }
+
 
             public string ImageUrl { get; set; }
 
