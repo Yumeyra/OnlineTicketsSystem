@@ -15,4 +15,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.21" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\Seed\cities-bg.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

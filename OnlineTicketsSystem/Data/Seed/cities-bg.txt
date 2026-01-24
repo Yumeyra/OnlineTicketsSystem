@@ -1,0 +1,224 @@
+﻿Айтос|Aytos
+Аксаково|Aksakovo
+Алфатар|Alfatar
+Антоново|Antonovo
+Ардино|Ardino
+Асеновград|Asenovgrad
+Ахелой|Aheloy
+Ахтопол|Ahtopol
+Балчик|Balchik
+Банкя|Bankya
+Банско|Bansko
+Батак|Batak
+Белене|Belene
+Белица|Belitsa
+Белово|Belovo
+Белоградчик|Belogradchik
+Белослав|Beloslav
+Берковица|Berkovitsa
+Благоевград|Blagoevgrad
+Бобов дол|BobovDol
+Бобошево|Boboshevo
+Божурище|Bozhurishte
+Бойчиновци|Boychinovtsi
+Болярово|Bolyarovo
+Борово|Borovo
+Ботевград|Botevgrad
+Брацигово|Bratsigovo
+Брегово|Bregovo
+Брезник|Breznik
+Брезово|Brezovo
+Брусарци|Brusartsi
+Бургас|Burgas
+Бухово|Buhovo
+Бяла|Byala
+Бяла Слатина|ByalaSlatina
+Варна|Varna
+Велики Преслав|VelikiPreslav
+Велико Търново|VelikoTarnovo
+Велинград|Velingrad
+Ветово|Vetovo
+Видин|Vidin
+Враца|Vratsa
+Върбица|Varbitsa
+Вършец|Varshets
+Габрово|Gabrovo
+Генерал Тошево|GeneralToshevo
+Главиница|Glavinitsa
+Глоджево|Glodzhevo
+Годеч|Godech
+Горна Оряховица|GornaOryahovitsa
+Гоце Делчев|GotseDelchev
+Грамада|Gramada
+Гулянци|Gulyantsi
+Гурково|Gurkovo
+Две могили|DveMogili
+Дебелец|Debelets
+Девин|Devin
+Девня|Devnya
+Джебел|Dzhebel
+Димитровград|Dimitrovgrad
+Димово|Dimovo
+Добрич|Dobrich
+Долна баня|DolnaBanya
+Долна Митрополия|DolnaMitropoliya
+Долна Оряховица|DolnaOryahovitsa
+Долни Дъбник|DolniDabnik
+Долни чифлик|DolniChiflik
+Дряново|Dryanovo
+Дулово|Dulovo
+Дунавци|Dunavtsi
+Елена|Elena
+Елин Пелин|ElinPelin
+Елхово|Elhovo
+Етрополе|Etropole
+Завет|Zavet
+Земен|Zemen
+Златарица|Zlataritsa
+Златица|Zlatitsa
+Ивайловград|Ivaylovgrad
+Игнатиево|Ignatievo
+Искър|Iskar
+Исперих|Isperih
+Ихтиман|Ihtiman
+Каблешково|Kableshkovo
+Каварна|Kavarna
+Казанлък|Kazanlak
+Калофер|Kalofer
+Камено|Kameno
+Каолиново|Kaolinovo
+Карлово|Karlovo
+Карнобат|Karnobat
+Каспичан|Kaspichan
+Кермен|Kermen
+Килифарево|Kilifarevo
+Китен|Kiten
+Клисура|Klisura
+Кнежа|Knezha
+Козлодуй|Kozloduy
+Койнаре|Koynare
+Копривщица|Koprivshtitsa
+Костандово|Kostandovo
+Костенец|Kostenets
+Костинброд|Kostinbrod
+Котел|Kotel
+Кочериново|Kocherinovo
+Кресна|Kresna
+Криводол|Krivodol
+Крумовград|Krumovgrad
+Кубрат|Kubrat
+Куклен|Kuklen
+Кула|Kula
+Кърджали|Kardzhali
+Кюстендил|Kyustendil
+Левски|Levski
+Летница|Letnitsa
+Ловеч|Lovech
+Лозница|Loznitsa
+Лом|Lom
+Луковит|Lukovit
+Лъки|Laki
+Любимец|Lyubimets
+Лясковец|Lyaskovets
+Мадан|Madan
+Маджарово|Madzharovo
+Малко Търново|MalkoTarnovo
+Мартен|Marten
+Мездра|Mezdra
+Мелник|Melnik
+Момин проход|MominProhod
+Момчилград|Momchilgrad
+Монтана|Montana
+Мъглиж|Maglizh
+Неделино|Nedelino
+Несебър|Nesebar
+Николаево|Nikolaevo
+Никопол|Nikopol
+Нова Загора|NovaZagora
+Нови Искър|NoviIskar
+Нови пазар|NoviPazar
+Обзор|Obzor
+Омуртаг|Omurtag
+Опака|Opaka
+Оряхово|Oryahovo
+Павел баня|PavelBanya
+Павликени|Pavlikeni
+Пазарджик|Pazardzhik
+Панагюрище|Panagyurishte
+Перник|Pernik
+Перущица|Perushtitsa
+Петрич|Petrich
+Пещера|Peshtera
+Пирдоп|Pirdop
+Плачковци|Plachkovtsi
+Плевен|Pleven
+Пловдив|Plovdiv
+Полски Тръмбеш|PolskiTrambesh
+Поморие|Pomorie
+Попово|Popovo
+Провадия|Provadiya
+Първомай|Parvomay
+Раднево|Radnevo
+Радомир|Radomir
+Разград|Razgrad
+Разлог|Razlog
+Ракитово|Rakitovo
+Раковски|Rakovski
+Рила|Rila
+Роман|Roman
+Рудозем|Rudozem
+Русе|Ruse
+Самоков|Samokov
+Сандански|Sandanski
+Сапарева баня|SaparevaBanya
+Свети Влас|SvetiVlas
+Свиленград|Svilengrad
+Свищов|Svishtov
+Своге|Svoge
+Севлиево|Sevlievo
+Сеново|Senovo
+Септември|Septemvri
+Силистра|Silistra
+Симеоновград|Simeonovgrad
+Сливен|Sliven
+Сливница|Slivnitsa
+Смолян|Smolyan
+Созопол|Sozopol
+София|Sofia
+Средец|Sredets
+Стамболийски|Stamboliyski
+Стара Загора|StaraZagora
+Стражица|Strazhitsa
+Стрелча|Strelcha
+Суворово|Suvorovo
+Сунгурларе|Sungurlare
+Сухиндол|Suhindol
+Съединение|Saedinenie
+Твърдица|Tvarditsa
+Тервел|Tervel
+Тетевен|Teteven
+Тополовград|Topolovgrad
+Троян|Troyan
+Трън|Tran
+Тръстеник|Trastenik
+Тутракан|Tutrakan
+Угърчин|Ugarchin
+Хаджидимово|Hadzhidimovo
+Харманли|Harmanli
+Хасково|Haskovo
+Хисаря|Hisarya
+Цар Калоян|TsarKaloyan
+Царево|Tsarevo
+Чепеларе|Chepelare
+Червен бряг|ChervenBryag
+Черноморец|Chernomorets
+Чипровци|Chiprovtsi
+Чирпан|Chirpan
+Шабла|Shabla
+Шивачево|Shivachevo
+Шипка|Shipka
+Шумен|Shumen
+Ябланица|Yablanitsa
+Якоруда|Yakoruda
+Ямбол|Yambol
+

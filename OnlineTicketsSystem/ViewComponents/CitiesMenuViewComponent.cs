@@ -14,16 +14,18 @@ namespace OnlineTicketsSystem.ViewComponents
             _context = context;
         }
 
+
+
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var cities = await _context.Events
-                .Select(e => e.City)
-                .Distinct()
-                .OrderBy(c => c)
+            var cities = await _context.Cities
+                .OrderBy(c => c.Name)
                 .ToListAsync();
 
             return View(cities);
         }
+
     }
 }
 

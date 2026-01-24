@@ -5,6 +5,56 @@ using OnlineTicketsSystem.Data;
 
 namespace OnlineTicketsSystem.Controllers
 {
+    //[Route("Cities")]
+    //public class CitiesController : Controller
+    //{
+    //    private readonly ApplicationDbContext _context;
+
+    //    public CitiesController(ApplicationDbContext context)
+    //    {
+    //        _context = context;
+    //    }
+
+
+
+    //    // /Cities  -> страница с всички градове (от таблица Cities)
+    //    [HttpGet("")]
+    //    public async Task<IActionResult> Index()
+    //    {
+    //        //var cities = await _context.Cities
+    //        //    .OrderBy(c => c.Name)
+    //        //    .ToListAsync();
+
+    //        //return View(cities);
+    //        var cities = await _context.Cities
+    //.OrderBy(c => c.Name)
+    //.Select(c => c.Name)
+    //.ToListAsync();
+
+    //        return View(cities);
+    //    }
+
+
+
+    //    // /Cities/{slug} -> събития в избрания град
+    //    [HttpGet("{slug}")]
+    //    public async Task<IActionResult> ByCity(string slug)
+    //    {
+    //        var city = await _context.Cities
+    //            .FirstOrDefaultAsync(c => c.Slug == slug);
+
+    //        if (city == null)
+    //            return NotFound();
+
+    //        var eventsInCity = await _context.Events
+    //            .Include(e => e.Category)
+    //            .Where(e => e.City == city.Name)   // тук Events.City е на кирилица (напр. "Бургас")
+    //            .OrderBy(e => e.Date)
+    //            .ToListAsync();
+
+    //        ViewData["CityName"] = city.Name;
+    //        return View(eventsInCity);
+    //    }
     [Route("Cities")]
     public class CitiesController : Controller
     {
@@ -15,35 +65,36 @@ namespace OnlineTicketsSystem.Controllers
             _context = context;
         }
 
-        // /Cities  -> страница с всички градове
+        // /Cities -> всички градове от таблица Cities
         [HttpGet("")]
         public async Task<IActionResult> Index()
         {
-            var cities = await _context.Events
-                .Select(e => e.City)
-                .Distinct()
-                .OrderBy(c => c)
+            var cities = await _context.Cities
+                .OrderBy(c => c.Name)
                 .ToListAsync();
 
             return View(cities);
         }
 
-        // /Cities/Burgas -> събития в Бургас
+        // /Cities/{slug} -> събития за този град
         [HttpGet("{slug}")]
         public async Task<IActionResult> ByCity(string slug)
         {
-            if (!CitySlugMap.TryGetBgName(slug, out var cityBg))
-                return NotFound();
+            var city = await _context.Cities.FirstOrDefaultAsync(c => c.Slug == slug);
+            if (city == null) return NotFound();
 
+            // ВАЖНО: тук приемаме, че Event.City е текст и трябва да съвпадне с city.Name
             var eventsInCity = await _context.Events
                 .Include(e => e.Category)
-                .Where(e => e.City == cityBg)
+                .Where(e => e.City == city.Name)
                 .OrderBy(e => e.Date)
                 .ToListAsync();
 
-            ViewData["CityName"] = cityBg;
+            ViewData["CityName"] = city.Name;
             return View(eventsInCity);
         }
     }
+
 }
+
 

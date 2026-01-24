@@ -5,6 +5,8 @@ using OnlineTicketsSystem.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 
 
@@ -20,7 +22,97 @@ namespace OnlineTicketsSystem.Data
                 var context = services.GetRequiredService<ApplicationDbContext>();
                 var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
                 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                // --- Градове (Cities) – диагностика + добавя липсващите от файла ---
+                try
+                {
+                    var env = services.GetRequiredService<Microsoft.AspNetCore.Hosting.IWebHostEnvironment>();
 
+                    // Път 1: проектната папка (ContentRootPath)
+                    var path1 = Path.Combine(env.ContentRootPath, "Data", "Seed", "cities-bg.txt");
+
+                    // Път 2: output/bin папката (ако VS стартира оттам)
+                    var path2 = Path.Combine(AppContext.BaseDirectory, "Data", "Seed", "cities-bg.txt");
+
+                    string? filePath = null;
+
+                    if (File.Exists(path1)) filePath = path1;
+                    else if (File.Exists(path2)) filePath = path2;
+
+                    Console.WriteLine($"[Cities seed] ContentRootPath: {env.ContentRootPath}");
+                    Console.WriteLine($"[Cities seed] BaseDirectory: {AppContext.BaseDirectory}");
+                    Console.WriteLine($"[Cities seed] path1 exists: {File.Exists(path1)} -> {path1}");
+                    Console.WriteLine($"[Cities seed] path2 exists: {File.Exists(path2)} -> {path2}");
+
+                    if (filePath == null)
+                    {
+                        Console.WriteLine("[Cities seed] ERROR: cities-bg.txt NOT FOUND.");
+                    }
+                    else
+                    {
+                        var lines = File.ReadAllLines(filePath);
+                        Console.WriteLine($"[Cities seed] Using file: {filePath}");
+                        Console.WriteLine($"[Cities seed] Lines in file: {lines.Length}");
+
+                        int added = 0;
+
+                        foreach (var line in lines)
+                        {
+                            if (string.IsNullOrWhiteSpace(line)) continue;
+
+                            var parts = line.Split('|', StringSplitOptions.TrimEntries);
+                            if (parts.Length != 2) continue;
+
+                            var name = parts[0];
+                            var slug = parts[1];
+
+                            if (context.Cities.Any(c => c.Slug == slug))
+                                continue;
+
+                            context.Cities.Add(new City { Name = name, Slug = slug });
+                            added++;
+                        }
+
+                        context.SaveChanges();
+                        Console.WriteLine($"[Cities seed] Added cities: {added}");
+                        Console.WriteLine($"[Cities seed] Total cities in DB now: {context.Cities.Count()}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("[Cities seed] EXCEPTION: " + ex);
+                }
+
+                //var env = services.GetRequiredService<IWebHostEnvironment>();
+                //var filePath = Path.Combine(env.ContentRootPath, "Data", "Seed", "cities-bg.txt");
+
+                /* if (File.Exists(filePath))
+                 {
+                     var lines = File.ReadAllLines(filePath);
+
+                     foreach (var line in lines)
+                     {
+                         if (string.IsNullOrWhiteSpace(line)) continue;
+
+                         var parts = line.Split('|', StringSplitOptions.TrimEntries);
+                         if (parts.Length != 2) continue;
+
+                         var name = parts[0];
+                         var slug = parts[1];
+
+                         // проверка дали вече го има
+                         if (context.Cities.Any(c => c.Slug == slug))
+                             continue;
+
+                         context.Cities.Add(new City
+                         {
+                             Name = name,
+                             Slug = slug
+                         });
+                     }
+
+                     context.SaveChanges();
+                 }
+ */
 
 
 

@@ -35,6 +35,9 @@ namespace OnlineTicketsSystem.Models
             // Category
             public int CategoryId { get; set; }
             public Category Category { get; set; }
-        
+        public int? CityId { get; set; }
+        public City? CityEntity { get; set; }
+
+
     }
 }
