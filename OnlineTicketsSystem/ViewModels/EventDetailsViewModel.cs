@@ -7,5 +7,8 @@ namespace OnlineTicketsSystem.ViewModels
         public int SoldTickets { get; set; }
         public int RemainingSeats { get; set; }
         public bool IsSoldOut => RemainingSeats <= 0;
+        public int Id { get; set; }
+        public decimal Price { get; set; }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace OnlineTicketsSystem.Models
@@ -37,7 +38,9 @@ namespace OnlineTicketsSystem.Models
             public Category Category { get; set; }
         public int? CityId { get; set; }
         public City? CityEntity { get; set; }
-
+        [Column(TypeName = "decimal(10,2)")]
+        [Range(0, 999999)]
+        public decimal Price { get; set; }  // цена в EUR
 
     }
 }

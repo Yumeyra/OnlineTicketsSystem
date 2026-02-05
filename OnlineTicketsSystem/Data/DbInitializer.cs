@@ -82,38 +82,7 @@ namespace OnlineTicketsSystem.Data
                     Console.WriteLine("[Cities seed] EXCEPTION: " + ex);
                 }
 
-                //var env = services.GetRequiredService<IWebHostEnvironment>();
-                //var filePath = Path.Combine(env.ContentRootPath, "Data", "Seed", "cities-bg.txt");
-
-                /* if (File.Exists(filePath))
-                 {
-                     var lines = File.ReadAllLines(filePath);
-
-                     foreach (var line in lines)
-                     {
-                         if (string.IsNullOrWhiteSpace(line)) continue;
-
-                         var parts = line.Split('|', StringSplitOptions.TrimEntries);
-                         if (parts.Length != 2) continue;
-
-                         var name = parts[0];
-                         var slug = parts[1];
-
-                         // проверка дали вече го има
-                         if (context.Cities.Any(c => c.Slug == slug))
-                             continue;
-
-                         context.Cities.Add(new City
-                         {
-                             Name = name,
-                             Slug = slug
-                         });
-                     }
-
-                     context.SaveChanges();
-                 }
- */
-
+               
 
 
                 // --- Категории ---
@@ -172,6 +141,7 @@ namespace OnlineTicketsSystem.Data
         Description = "Голям рок концерт в центъра на София",
         City = "София",
         Venue = "Арена София",
+        Price = 8.00m,
         Date = DateTime.Now.AddDays(20),
         Capacity = 500,
         ImageUrl = "",
@@ -183,6 +153,7 @@ namespace OnlineTicketsSystem.Data
         Description = "Дерби мач от първа лига",
         City = "Пловдив",
         Venue = "Стадион Пловдив",
+        Price = 8.90m,
         Date = DateTime.Now.AddDays(12),
         Capacity = 800,
         ImageUrl = "",
@@ -194,6 +165,7 @@ namespace OnlineTicketsSystem.Data
         Description = "Комедийна постановка",
         City = "Варна",
         Venue = "Драматичен театър",
+        Price = 10.00m,
         Date = DateTime.Now.AddDays(18),
         Capacity = 200,
         ImageUrl = "",
@@ -205,6 +177,7 @@ namespace OnlineTicketsSystem.Data
         Description = "Премиера на нов български филм",
         City = "Бургас",
         Venue = "Cinema City",
+        Price = 12.90m,
         Date = DateTime.Now.AddDays(7),
         Capacity = 150,
         ImageUrl = "",
@@ -216,6 +189,7 @@ namespace OnlineTicketsSystem.Data
         Description = "Джаз концерт на живо",
         City = "Русе",
         Venue = "Културен дом",
+        Price = 15.00m,
         Date = DateTime.Now.AddDays(25),
         Capacity = 120,
         ImageUrl = "",
@@ -227,6 +201,7 @@ namespace OnlineTicketsSystem.Data
         Description = "Класически балет",
         City = "Стара Загора",
         Venue = "Опера Стара Загора",
+        Price = 16.50m,
         Date = DateTime.Now.AddDays(30),
         Capacity = 300,
         ImageUrl = "",
@@ -238,6 +213,7 @@ namespace OnlineTicketsSystem.Data
         Description = "Регионален турнир",
         City = "Плевен",
         Venue = "Спортна зала Плевен",
+        Price = 10.00m,
         Date = DateTime.Now.AddDays(14),
         Capacity = 400,
         ImageUrl = "",
@@ -249,6 +225,7 @@ namespace OnlineTicketsSystem.Data
         Description = "Изложби и музика",
         City = "Велико Търново",
         Venue = "Стария град",
+        Price = 12.90m,
         Date = DateTime.Now.AddDays(40),
         Capacity = 600,
         ImageUrl = "",
@@ -256,16 +233,52 @@ namespace OnlineTicketsSystem.Data
     }
 };
 
-            // добавяме само тези, които ги няма
-            foreach (var ev in eventsToSeed)
-            {
-                if (!context.Events.Any(e => e.Title == ev.Title))
-                {
-                    context.Events.Add(ev);
-                }
-            }
 
-            context.SaveChanges();
+
+                //foreach (var ev in eventsToSeed)
+                //{
+                //    var existing = context.Events.FirstOrDefault(e => e.Title == ev.Title);
+                //    if (existing == null)
+                //    {
+                //        context.Events.Add(ev);
+                //    }
+                //    else
+                //    {
+                //        // обновяване на полета (важното за нас: Price)
+                //        existing.Description = ev.Description;
+                //        existing.City = ev.City;
+                //        existing.Venue = ev.Venue;
+                //        existing.Date = ev.Date;
+                //        existing.Capacity = ev.Capacity;
+                //        existing.ImageUrl = ev.ImageUrl;
+                //        existing.CategoryId = ev.CategoryId;
+                //        existing.Price = ev.Price;
+                //    }
+                //}
+                //context.SaveChanges();
+                foreach (var ev in eventsToSeed)
+                {
+                    var existing = context.Events.FirstOrDefault(e => e.Title == ev.Title);
+
+                    if (existing == null)
+                    {
+                        context.Events.Add(ev);
+                    }
+                    else
+                    {
+                        // update важните полета (вкл. Price)
+                        existing.Description = ev.Description;
+                        existing.City = ev.City;
+                        existing.Venue = ev.Venue;
+                        existing.Date = ev.Date;
+                        existing.Capacity = ev.Capacity;
+                        existing.ImageUrl = ev.ImageUrl;
+                        existing.CategoryId = ev.CategoryId;
+                        existing.Price = ev.Price;
+                    }
+                }
+
+                context.SaveChanges();
 
                 // --- Роли ---
                 if (!await roleManager.RoleExistsAsync("Admin"))

@@ -52,8 +52,13 @@ namespace OnlineTicketsSystem.Controllers
             {
                 Event = ev,
                 SoldTickets = sold,
-                RemainingSeats = remaining
+                RemainingSeats = remaining,
+                Id = ev.Id,
+                Price = ev.Price,
+
             };
+           
+
 
             return View(vm);
         }
