@@ -22,8 +22,8 @@
         <th>Venue</th>
         <th>Category</th>
         <th>Date</th>
-        <th>Детайли</th>
         <th>Цена</th>
+        <th>Детайли</th>
     </tr>
     @foreach (var e in Model)
     {
@@ -37,19 +37,10 @@
             <td>
                 <a asp-action="Details" asp-route-id="@e.Id">Виж</a>
 
-                <form asp-controller="Cart"
-                      asp-action="Add"
-                      method="post"
-                      style="display:inline;">
-                    <input type="hidden" name="eventId" value="@e.Id" />
-                    <input type="hidden" name="quantity" value="1" />
-                    <button type="submit">Купи билет</button>
-                </form>
+                
             </td>
 
-			@* <td>
-                <a asp-action="Details" asp-route-id="@e.Id">Виж</a>
-            </td> *@
+		
         </tr>
         
 

@@ -31,11 +31,17 @@ namespace OnlineTicketsSystem.Models
         public int Capacity { get; set; }
 
 
-            public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
 
-            // Category
-            public int CategoryId { get; set; }
-            public Category Category { get; set; }
+        
+
+        [Required]
+        public int CategoryId { get; set; }
+
+        public Category? Category { get; set; }
+
+
+
         public int? CityId { get; set; }
         public City? CityEntity { get; set; }
         [Column(TypeName = "decimal(10,2)")]

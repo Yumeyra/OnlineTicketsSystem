@@ -36,35 +36,56 @@ namespace OnlineTicketsSystem.Controllers
         }
 
         // GET: /Events/Details/5
+        //public async Task<IActionResult> Details(int id)
+        //{
+        //    var ev = await _context.Events
+        //        .Include(e => e.Category)
+        //        .FirstOrDefaultAsync(e => e.Id == id);
+
+        //    if (ev == null)
+        //        return NotFound();
+
+        //    var sold = await _context.Tickets.CountAsync(t => t.EventId == id);
+        //    var remaining = ev.Capacity - sold;
+
+        //    var vm = new EventDetailsViewModel
+        //    {
+        //        Event = ev,
+        //        SoldTickets = sold,
+        //        RemainingSeats = remaining,
+        //        Id = ev.Id,
+        //        Price = ev.Price,
+
+        //    };
+
+        //    return View(vm);
+        //}
         public async Task<IActionResult> Details(int id)
         {
             var ev = await _context.Events
                 .Include(e => e.Category)
                 .FirstOrDefaultAsync(e => e.Id == id);
 
-            if (ev == null)
-                return NotFound();
+            if (ev == null) return NotFound();
 
-            var sold = await _context.Tickets.CountAsync(t => t.EventId == id);
-            var remaining = ev.Capacity - sold;
+            // колко билета са купени за това събитие
+            var soldTickets = await _context.Tickets.CountAsync(t => t.EventId == id);
 
-            var vm = new EventDetailsViewModel
+            var remainingSeats = ev.Capacity - soldTickets;
+
+            var model = new OnlineTicketsSystem.ViewModels.EventDetailsViewModel
             {
                 Event = ev,
-                SoldTickets = sold,
-                RemainingSeats = remaining,
-                Id = ev.Id,
-                Price = ev.Price,
-
+                SoldTickets = soldTickets,
+                RemainingSeats = remainingSeats
             };
-           
 
-
-            return View(vm);
+            return View(model);
         }
 
 
-            [Authorize]
+
+        [Authorize]
             [HttpPost]
             [ValidateAntiForgeryToken]
             public async Task<IActionResult> BuyTicket(int id, int quantity = 1)
