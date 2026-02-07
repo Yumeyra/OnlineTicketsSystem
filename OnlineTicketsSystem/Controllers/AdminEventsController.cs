@@ -87,15 +87,34 @@ namespace OnlineTicketsSystem.Controllers
             return View(ev);
         }
 
-        // POST: /AdminEvents/Delete/5
+        //// POST: /AdminEvents/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    var ev = await _context.Events.FindAsync(id);
+        //    if (ev == null) return NotFound();
+
+        //    _context.Events.Remove(ev);
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ev = await _context.Events.FindAsync(id);
+            // ВАЖНО: ако имаш query filter, FindAsync може да НЕ намира вече изтрити.
+            // За изтриване на активни събития е ок, но аз го правя сигурно:
+            var ev = await _context.Events
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync(e => e.Id == id);
+
             if (ev == null) return NotFound();
 
-            _context.Events.Remove(ev);
+            // Тук НЕ Remove(), а маркираме IsDeleted.
+            ev.IsDeleted = true;
+            ev.DeletedAt = DateTime.UtcNow;
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

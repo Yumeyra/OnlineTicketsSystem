@@ -1,0 +1,54 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<OnlineTicketsSystem.Models.Ticket>
+
+<h1>Моите билети</h1>
+
+@if (!Model.Any())
+{
+    <p>Нямаш закупени билети все още.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Събитие</th>
+                <th>Категория</th>
+                <th>Град</th>
+                <th>Дата</th>
+                <th>Кол.</th>
+                <th>Цена</th>
+                <th>Статус</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in Model)
+            {
+                <tr>
+                    <td>@t.Event.Title</td>
+                    <td>@t.Event.Category?.Name</td>
+                    <td>@t.Event.City</td>
+                    <td>@t.Event.Date.ToShortDateString()</td>
+                    <td>@t.Quantity</td>
+                    @* <td>@(t.UnitPrice* t.Quantity).ToString("0.00") EUR</td> *@
+                    <td> @t.UnitPrice.ToString("0.00") EUR</td>
+                    <td>
+                        @if (t.IsPaid)
+                        {
+                            <span class="badge bg-success">Платено</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">Неплатено</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+

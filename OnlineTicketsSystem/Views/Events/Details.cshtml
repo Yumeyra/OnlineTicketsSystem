@@ -1,8 +1,5 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@* @model OnlineTicketsSystem.ViewModels.EventDetailsViewModel *@
 
-@* @model OnlineTicketsSystem.Models.Event *@
 @model OnlineTicketsSystem.ViewModels.EventDetailsViewModel
 @if (TempData["Message"] != null)
 {
@@ -11,67 +8,38 @@
 
 <h1>@Model.Event.Title</h1>
 
-@* <p><strong>Категория:</strong> @Model.Event.Category.Name</p>
-<p><strong>Град:</strong> @Model.Event.City</p>
-<p><strong>Място:</strong> @Model.Event.Venue</p>
-<p><strong>Дата:</strong> @Model.Event.Date.ToShortDateString()</p>
-<p><strong>Капацитет:</strong> @Model.Event.Capacity</p>
-<p><strong>Описание:</strong> @Model.Event.Description</p>
- <p><strong>Цена:</strong> @Model.Price.ToString("0.00") EUR</p>  *@
 <p><strong>Категория:</strong> @Model.Event.Category?.Name</p>
 <p><strong>Град:</strong> @Model.Event.City</p>
 <p><strong>Място:</strong> @Model.Event.Venue</p>
 <p><strong>Дата:</strong> @Model.Event.Date.ToShortDateString()</p>
-
-<p><strong>Цена:</strong> @Model.Event.Price.ToString("0.00") EUR</p>
+<p><strong>Капацитет:</strong> @Model.Event.Capacity</p>
 <p><strong>Оставащи места:</strong> @Model.RemainingSeats</p>
-
 <p><strong>Описание:</strong> @Model.Event.Description</p>
+<p><strong>Цена:</strong> @Model.Event.Price.ToString("0.00") EUR</p>
 
 @if (!string.IsNullOrWhiteSpace(Model.Event.ImageUrl))
 {
-    <img src="@Model.Event.ImageUrl" alt="@Model.Event.Title" style="max-width:400px;" />
+    <img src="@Model.Event.ImageUrl" alt="@Model.Event.Title" class="event-img" />
 }
-
-
-@*if (!string.IsNullOrEmpty(Model.Event.ImageUrl))
+else
 {
-    <img src="@Model.Event.ImageUrl" alt="@Model.Event.Title" width="300" />
+    <img src="~/images/placeholder.jpg" alt="No image" class="event-img" />
 }
- <form asp-action="BuyTicket" method="post">
-    @Html.AntiForgeryToken()
-    <input type="hidden" name="id" value="@Model.Event.Id" />
 
-    <label>Брой билети:</label>
-    <input type="number" name="quantity" value="1" min="1" max="10" />
 
-   
-    <a class="btn btn-warning" asp-controller="Cart" asp-action="Add" asp-route-eventId="@Model.Id">
-        Купи билет – @Model.Price.ToString("0.00") EUR
-    </a>
-    <form asp-controller="Cart" asp-action="Add" method="post">
-        <input type="hidden" name="eventId" value="@Model.Id" />
-
-        <label>Количество:</label>
-        <input type="number" name="quantity" value="1" min="1" max="20" />
-
-        <button type="submit">Купи билет</button>
-    </form> *@
-
-@**@
 @if (User.Identity != null && User.Identity.IsAuthenticated)
 {
     if (Model.IsSoldOut)
     {
-        <button class="btn btn-secondary" disabled>Няма свободни места</button>
+        <button class="btn btn-secondary mt-3" disabled>Няма свободни места</button>
     }
     else
     {
         <form asp-controller="Cart" asp-action="Add" method="post" class="mt-3">
             <input type="hidden" name="eventId" value="@Model.Event.Id" />
 
-            <label>Количество:</label>
-            <input type="number" name="quantity" value="1" min="1" max="20" />
+            <label for="qty">Количество:</label>
+            <input id="qty" type="number" name="quantity" value="1" min="1" max="20" />
 
             <button type="submit" class="btn btn-warning">
                 Купи билет – @Model.Event.Price.ToString("0.00") EUR
@@ -90,44 +58,4 @@ else
     </div>
 }
 
-else
-{
-    <img src="~/images/placeholder.jpg" alt="No image" style="max-width: 400px;" />
-}
-
-@* <form asp-controller="Cart" asp-action="Add" method="post" class="mt-3">
-    <input type="hidden" name="eventId" value="@Model.Id" />
-
-    <label for="qty">Количество:</label>
-    <input id="qty" type="number" name="quantity" value="1" min="1" max="20" />
-
-    <button type="submit" class="btn btn-warning">
-        Купи билет – @Model.Price.ToString("0.00") EUR
-    </button>
-</form> *@
-
-    @if (User.Identity != null && User.Identity.IsAuthenticated)
-    {
-        if (Model.IsSoldOut)
-        {
-            <button class="btn btn-secondary" disabled>Няма свободни места</button>
-        }
-        else
-        {
-            <form asp-action="BuyTicket" method="post" class="mt-2">
-                @Html.AntiForgeryToken()
-                <input type="hidden" name="id" value="@Model.Event.Id" />
-
-               
-                @* <input type="number" name="quantity" value="1" min="1" max="10" /> *@
-
-               
-            </form>
-        }
-    }
-   
-
-
-
 <a asp-action="Index">Обратно към списъка</a>
-

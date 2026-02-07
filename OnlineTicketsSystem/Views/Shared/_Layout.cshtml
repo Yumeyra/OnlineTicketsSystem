@@ -50,12 +50,26 @@
                             </ul>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Cart" asp-action="Index">Кошница</a>
+                        </li>
+
+
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-danger" asp-controller="AdminEvents" asp-action="Index">Admin</a>
                             </li>
+                        } 
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Tickets" asp-action="My">Моите билети</a>
+                            </li>
                         }
+
+
+
                     </ul>
 
 

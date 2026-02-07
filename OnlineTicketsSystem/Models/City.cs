@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using OnlineTicketsSystem.Models.Common;
+using System.ComponentModel.DataAnnotations;
 namespace OnlineTicketsSystem.Models
 {
-    public class City
+    public class City : ISoftDeletable
     {
         public int Id { get; set; }
 
@@ -9,6 +10,9 @@ namespace OnlineTicketsSystem.Models
         public string Name { get; set; } = null!;   
 
         [Required]
-        public string Slug { get; set; } = null!;   
+        public string Slug { get; set; } = null!;
+
+        public bool IsDeleted { get; set; } = false;
+        public DateTime? DeletedAt { get; set; }
     }
 }
