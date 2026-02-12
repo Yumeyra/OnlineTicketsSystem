@@ -156,42 +156,7 @@ namespace OnlineTicketsSystem.Controllers
         }
 
 
-        // POST: /Cart/Checkout  (симулира “плащане”)
-        //[Authorize]
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Checkout()
-        //{
-        //    TempData["Message"] = "DEBUG: Влязох в Checkout";
-
-        //    var cart = HttpContext.Session.GetObject<CartVm>(CartKey) ?? new CartVm();
-
-        //    if (!cart.Items.Any())
-        //    {
-        //        TempData["Message"] = "Кошницата е празна.";
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    var userId = _userManager.GetUserId(User);
-
-        //    foreach (var item in cart.Items)
-        //    {
-        //        // 1) Вземаме събитието от базата (за да вземем реалната цена)
-        //        var ev = await _context.Events.FirstOrDefaultAsync(e => e.Id == item.EventId);
-        //        if (ev == null) continue;
-
-        //        // 2) Записваме Ticket
-        //        var ticket = new Ticket
-        //        {
-        //            EventId = ev.Id,
-        //            UserId = userId!,
-        //            Quantity = item.Quantity,
-        //            UnitPrice = ev.Price,
-        //            PurchaseDate = DateTime.UtcNow
-        //        };
-
-        //       // _context.Tickets.Add(ticket);
-        //    }
+       
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -212,24 +177,7 @@ namespace OnlineTicketsSystem.Controllers
                 return RedirectToAction("Index");
             }
 
-            // записваме билетите в базата
-            //foreach (var item in cart.Items)
-            //{
-            //    var ticket = new Ticket
-            //    {
-            //        EventId = item.EventId,
-            //        UserId = userId,
-            //        Quantity = item.Quantity,
-            //        UnitPrice = item.Price,          // цена за 1 билет
-            //        IsPaid = true,
-            //        PaidAt = DateTime.Now,
-            //        PurchaseDate = DateTime.Now
-            //    };
-
-            //    _context.Tickets.Add(ticket);
-            //}
-
-            //await _context.SaveChangesAsync();
+            
             foreach (var item in cart.Items)
             {
                 var pending = await _context.Tickets
@@ -254,14 +202,7 @@ namespace OnlineTicketsSystem.Controllers
         }
 
 
-        //await _context.SaveChangesAsync();
-
-        // Почистваме кошницата
-        //HttpContext.Session.Remove(CartKey);
-
-        //    TempData["Message"] = "Плащането е успешно. Билетите са записани в 'Моите билети'.";
-        //    return RedirectToAction("My", "Tickets");
-        //}
+       
     }
 }
 

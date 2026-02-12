@@ -1,51 +1,104 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
 
-@model IEnumerable<OnlineTicketsSystem.Models.Event>
+
+@model OnlineTicketsSystem.ViewModels.EventsIndexViewModel
+
+@{
+    ViewData["Title"] = "Събития";
+}
 
 <h1>Събития</h1>
 
-<form method="get">
-    <input type="text" name="category" placeholder="Категория" />
-    <input type="text" name="city" placeholder="Град" />
-    <input type="date" name="date" />
-   
+<!-- (По желание) ако имаш TempData -->
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
 
-    <button type="submit">Търси</button>
-</form>
+<h2 class="mt-4">Предстоящи</h2>
 
-<table border="1" cellpadding="5">
-    <tr>
-        <th>Title</th>
-        <th>City</th>
-        <th>Venue</th>
-        <th>Category</th>
-        <th>Date</th>
-        <th>Цена</th>
-        <th>Детайли</th>
-    </tr>
-    @foreach (var e in Model)
-    {
-        <tr>
-            <td>@e.Title</td>
-            <td>@e.City</td>
-            <td>@e.Venue</td>
-            <td>@e.Category.Name</td>
-            <td>@e.Date.ToShortDateString()</td>
-            <td>@e.Price.ToString("0.00") EUR</td>
-            <td>
-                <a asp-action="Details" asp-route-id="@e.Id">Виж</a>
+@if (Model == null || Model.Upcoming == null || !Model.Upcoming.Any())
+{
+    <p>Няма предстоящи събития.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Заглавие</th>
+                <th>Град</th>
+                <th>Място</th>
+                <th>Категория</th>
+                <th>Дата</th>
+                <th>Цена</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var e in Model.Upcoming)
+            {
+                <tr>
+                    <td>@e.Title</td>
+                    <td>@e.City</td>
+                    <td>@e.Venue</td>
+                    <td>@(e.Category != null ? e.Category.Name : "-")</td>
+                    <td>@e.Date.ToShortDateString()</td>
+                    <td>@e.Price.ToString("0.00") EUR</td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary"
+                           asp-controller="Events"
+                           asp-action="Details"
+                           asp-route-id="@e.Id">Детайли</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
-                
-            </td>
+<hr class="my-4" />
 
-		
-        </tr>
-        
+<h2>Минали</h2>
 
-    }
-    
+@if (Model == null || Model.Past == null || !Model.Past.Any())
+{
+    <p>Няма минали събития.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Заглавие</th>
+                <th>Град</th>
+                <th>Място</th>
+                <th>Категория</th>
+                <th>Дата</th>
+                <th>Цена</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var e in Model.Past)
+            {
+                <tr>
+                    <td>@e.Title</td>
+                    <td>@e.City</td>
+                    <td>@e.Venue</td>
+                    <td>@(e.Category != null ? e.Category.Name : "-")</td>
+                    <td>@e.Date.ToShortDateString()</td>
+                    <td>@e.Price.ToString("0.00") EUR</td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary"
+                           asp-controller="Events"
+                           asp-action="Details"
+                           asp-route-id="@e.Id">Детайли</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
-</table>
 

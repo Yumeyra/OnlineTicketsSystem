@@ -21,45 +21,35 @@ namespace OnlineTicketsSystem.Controllers
         // GET: /Events
         public async Task<IActionResult> Index(string category, string city, DateTime? date)
         {
-            var events = _context.Events.Include(e => e.Category).AsQueryable();
+            //var events = _context.Events.Include(e => e.Category).AsQueryable();
 
-            if (!string.IsNullOrEmpty(category))
-                events = events.Where(e => e.Category.Name == category);
+            //if (!string.IsNullOrEmpty(category))
+            //    events = events.Where(e => e.Category.Name == category);
 
-            if (!string.IsNullOrEmpty(city))
-                events = events.Where(e => e.City.Contains(city));
+            //if (!string.IsNullOrEmpty(city))
+            //    events = events.Where(e => e.City.Contains(city));
 
-            if (date.HasValue)
-                events = events.Where(e => e.Date.Date == date.Value.Date);
+            //if (date.HasValue)
+            //    events = events.Where(e => e.Date.Date == date.Value.Date);
 
-            return View(await events.ToListAsync());
+            //return View(await events.ToListAsync());
+            var list = await _context.Events
+       .Include(e => e.Category)
+       .OrderBy(e => e.Date)
+       .ToListAsync();
+
+            var today = DateTime.Today;
+
+            var model = new EventsIndexViewModel
+            {
+                Upcoming = list.Where(e => e.Date.Date >= today).OrderBy(e => e.Date).ToList(),
+                Past = list.Where(e => e.Date.Date < today).OrderByDescending(e => e.Date).ToList()
+            };
+
+            return View(model);
         }
 
-        // GET: /Events/Details/5
-        //public async Task<IActionResult> Details(int id)
-        //{
-        //    var ev = await _context.Events
-        //        .Include(e => e.Category)
-        //        .FirstOrDefaultAsync(e => e.Id == id);
-
-        //    if (ev == null)
-        //        return NotFound();
-
-        //    var sold = await _context.Tickets.CountAsync(t => t.EventId == id);
-        //    var remaining = ev.Capacity - sold;
-
-        //    var vm = new EventDetailsViewModel
-        //    {
-        //        Event = ev,
-        //        SoldTickets = sold,
-        //        RemainingSeats = remaining,
-        //        Id = ev.Id,
-        //        Price = ev.Price,
-
-        //    };
-
-        //    return View(vm);
-        //}
+       
         public async Task<IActionResult> Details(int id)
         {
             var ev = await _context.Events

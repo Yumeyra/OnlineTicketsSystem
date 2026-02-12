@@ -1,5 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+    @RenderSection("Styles", required: false)
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,8 @@
     <link rel="stylesheet" href="~/OnlineTicketsSystem.styles.css" asp-append-version="true" />
 </head>
 <body>
+    @if (!(ViewData["HideMainNav"] as bool? ?? false))
+{
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -23,7 +27,7 @@
 
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Начало</a>
                         </li>
 
                         <li class="nav-item">
@@ -33,7 +37,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="eventsDropdown"
                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Events
+                                Събития
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
                                 @await Component.InvokeAsync("CategoriesMenu")
@@ -43,7 +47,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="citiesDropdown"
                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Cities
+                                Градове
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="citiesDropdown">
                                 @await Component.InvokeAsync("CitiesMenu")
@@ -58,7 +62,7 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-danger" asp-controller="AdminEvents" asp-action="Index">Admin</a>
+                                <a class="nav-link text-danger" asp-controller="AdminEvents" asp-action="Index">Админ Панел</a>
                             </li>
                         } 
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
@@ -77,7 +81,7 @@
                 </div>
             </div>
         </nav>
-    </header>
+    </header>}
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

@@ -34,7 +34,6 @@ else
                     <td>@t.Event.City</td>
                     <td>@t.Event.Date.ToShortDateString()</td>
                     <td>@t.Quantity</td>
-                    @* <td>@(t.UnitPrice* t.Quantity).ToString("0.00") EUR</td> *@
                     <td> @t.UnitPrice.ToString("0.00") EUR</td>
                     <td>
                         @if (t.IsPaid)
