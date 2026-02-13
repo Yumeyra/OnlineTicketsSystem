@@ -478,3 +478,15 @@
     padding: 10px 16px;
     border-radius: 14px;
 }
+.filtersForm {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    align-items: center;
+}
+
+.btn-search {
+    grid-column: 1 / -1; /* да е отдолу на цял ред като на снимката */
+    justify-self: start;
+    width: 260px;
+}

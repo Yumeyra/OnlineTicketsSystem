@@ -13,39 +13,11 @@
         <div class="hero__overlay"></div>
 
         <div class="container hero__content">
-            @* <div class="hero__top">
-                <div class="brand">
-                    <div class="brand__icon">🎟️</div>
-                    <div class="brand__name">Билети Онлайн</div>
-                </div>
-                <nav class="hero__nav">
-                    <a class="btn btn-ghost btn-sm" asp-controller="Home" asp-action="Index">Начало</a>
-                    <a class="btn btn-ghost btn-sm" asp-controller="Events" asp-action="Index">Събития</a>
-                    <a class="btn btn-ghost btn-sm" asp-controller="Cities" asp-action="Index">Градове</a>
-                    <a class="btn btn-ghost btn-sm" asp-controller="Cart" asp-action="Index">Кошница</a>
-                </nav>
-
-                <div class="hero__auth">
-                    @if (User.Identity != null && User.Identity.IsAuthenticated)
-                    {
-                        <a class="btn btn-ghost btn-sm" asp-controller="Tickets" asp-action="My">Моите билети</a>
-                        <a class="btn btn-ghost btn-sm" asp-controller="Cart" asp-action="Index">Кошница</a>
-                        <a class="btn btn-ghost btn-sm" asp-area="Identity" asp-page="/Account/Manage/Index">Профил</a>
-                        <form asp-area="Identity" asp-page="/Account/Logout" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-primary btn-sm">Изход</button>
-                        </form>
-                    }
-                    else
-                    {
-                        <a class="btn btn-ghost btn-sm" asp-area="Identity" asp-page="/Account/Login">Вход</a>
-                        <a class="btn btn-primary btn-sm" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
-                    }
-                </div>
-            </div> *@
+            
             <div class="hero__top">
                 <a class="brand" asp-controller="Home" asp-action="Index">
-                    <span class="brand__icon">🎟️</span>
-                    <span class="brand__name">TicketNest</span>
+                    @* <span class="brand__icon"></span> *@
+                    <span class="brand__name">EventAura</span>
                 </a>
 
                 <nav class="hero__nav">
@@ -87,7 +59,7 @@
                         <div class="upcoming__header">
                             <h2 class="section-title">Предстоящи събития</h2>
                         </div>
-                        <form method="get" class="filters">
+                        @* <form method="get" class="filters">
                             <!-- Категории -->
                             <select name="category" class="filter">
                                 <option value="">Всички категории</option>
@@ -130,7 +102,37 @@
                                 Търси
                             </button>
 
+                        </form> *@
+                        <form asp-controller="Home" asp-action="Index" method="get" class="filtersForm">
+                            <select name="categoryId" class="filter">
+                                <option value="">Всички категории</option>
+                                @foreach (var c in Model.Categories)
+                                {
+                                    <option value="@c.Id" selected="@(Model.SelectedCategoryId == c.Id)">
+                                        @c.Name
+                                    </option>
+                                }
+                            </select>
+
+                            <input name="city" class="filter" placeholder="Търси град..."
+                                   value="@Model.City" />
+
+                            <select name="dateRange" class="filter">
+                                <option value="">Предстоящи дати</option>
+                                <option value="week" selected="@(Model.DateRange == "week")">Тази седмица</option>
+                                <option value="month" selected="@(Model.DateRange == "month")">Този месец</option>
+                            </select>
+
+                            <select name="priceRange" class="filter">
+                                <option value="">Ценови диапазон</option>
+                                <option value="0-10" selected="@(Model.PriceRange == "0-10")">0 – 10 EUR</option>
+                                <option value="10-20" selected="@(Model.PriceRange == "10-20")">10 – 20 EUR</option>
+                                <option value="20+" selected="@(Model.PriceRange == "20+")">20+ EUR</option>
+                            </select>
+
+                            <button type="submit" class="btn btn-primary btn-search">Търси</button>
                         </form>
+
                        
 
                         <div class="cards">
@@ -192,7 +194,7 @@
                     <div class="why__icon">🔒</div>
                     <div class="why__text">
                         <h3>Сигурни резервации</h3>
-                        <p>Добавяш в кошница, плащаш (симулация) и виждаш билетите си в „Моите билети“.</p>
+                        <p>Добавяш в кошница, плащаш и виждаш билетите си в „Моите билети“.</p>
                     </div>
                 </div>
 

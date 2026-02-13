@@ -21,18 +21,7 @@ namespace OnlineTicketsSystem.Controllers
         // GET: /Events
         public async Task<IActionResult> Index(string category, string city, DateTime? date)
         {
-            //var events = _context.Events.Include(e => e.Category).AsQueryable();
-
-            //if (!string.IsNullOrEmpty(category))
-            //    events = events.Where(e => e.Category.Name == category);
-
-            //if (!string.IsNullOrEmpty(city))
-            //    events = events.Where(e => e.City.Contains(city));
-
-            //if (date.HasValue)
-            //    events = events.Where(e => e.Date.Date == date.Value.Date);
-
-            //return View(await events.ToListAsync());
+            
             var list = await _context.Events
        .Include(e => e.Category)
        .OrderBy(e => e.Date)
