@@ -19,26 +19,78 @@ namespace OnlineTicketsSystem.Controllers
         }
 
         // GET: /Events
-        public async Task<IActionResult> Index(string category, string city, DateTime? date)
+
+        //public async Task<IActionResult> Index(string? category, string? city, DateTime? date)
+        //{
+        //    var events = _context.Events
+        //        .Include(e => e.Category)
+        //        .AsQueryable();
+
+        //    if (!string.IsNullOrWhiteSpace(category))
+        //    {
+        //        var cat = category.Trim();
+        //        events = events.Where(e => e.Category != null && e.Category.Name == cat);
+        //    }
+
+        //    if (!string.IsNullOrWhiteSpace(city))
+        //    {
+        //        var c = city.Trim();
+        //        events = events.Where(e => e.City.Contains(c));
+        //    }
+
+        //    if (date.HasValue)
+        //    {
+        //        var d = date.Value.Date;
+        //        events = events.Where(e => e.Date.Date == d);
+        //    }
+
+        //    var result = await events
+        //        .OrderBy(e => e.Date)
+        //        .ToListAsync();
+
+        //    return View(result);
+        //}
+        public async Task<IActionResult> Index(string? category, string? city, DateTime? date)
         {
-            
-            var list = await _context.Events
-       .Include(e => e.Category)
-       .OrderBy(e => e.Date)
-       .ToListAsync();
+            var query = _context.Events
+                .Include(e => e.Category)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(category))
+            {
+                var cat = category.Trim();
+                query = query.Where(e => e.Category != null && e.Category.Name == cat);
+            }
+
+            if (!string.IsNullOrWhiteSpace(city))
+            {
+                var c = city.Trim();
+                query = query.Where(e => e.City.Contains(c));
+            }
+
+            if (date.HasValue)
+            {
+                var d = date.Value.Date;
+                query = query.Where(e => e.Date.Date == d);
+            }
+
+            var all = await query
+                .OrderBy(e => e.Date)
+                .ToListAsync();
 
             var today = DateTime.Today;
 
-            var model = new EventsIndexViewModel
+            var vm = new EventsIndexViewModel
             {
-                Upcoming = list.Where(e => e.Date.Date >= today).OrderBy(e => e.Date).ToList(),
-                Past = list.Where(e => e.Date.Date < today).OrderByDescending(e => e.Date).ToList()
+                Upcoming = all.Where(e => e.Date.Date >= today).ToList(),
+                Past = all.Where(e => e.Date.Date < today).ToList()
             };
 
-            return View(model);
+            return View(vm);
         }
 
-       
+
+
         public async Task<IActionResult> Details(int id)
         {
             var ev = await _context.Events
@@ -79,8 +131,15 @@ namespace OnlineTicketsSystem.Controllers
                 if (ev == null)
                     return NotFound();
 
-                // Колко билета вече са купени за това събитие
-                var sold = await _context.Tickets.CountAsync(t => t.EventId == id);
+            if (ev.Date.Date < DateTime.Today)
+            {
+                TempData["Message"] = "Това събитие е минало и не може да се закупи билет.";
+                return RedirectToAction("Details", new { id });
+            }
+
+
+            // Колко билета вече са купени за това събитие
+            var sold = await _context.Tickets.CountAsync(t => t.EventId == id);
 
                 // Свободни места
                 var remaining = ev.Capacity - sold;

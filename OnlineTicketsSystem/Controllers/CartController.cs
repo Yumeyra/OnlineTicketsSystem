@@ -65,6 +65,12 @@ namespace OnlineTicketsSystem.Controllers
                 existing.Quantity += quantity;
                 if (existing.Quantity > 20) existing.Quantity = 20;
             }
+            if (ev.Date.Date < DateTime.Today)
+            {
+                TempData["Message"] = "Това събитие е минало и не може да се закупи билет.";
+                return RedirectToAction("Details", "Events", new { id = eventId });
+            }
+
             var userId = _userManager.GetUserId(User);
             if (string.IsNullOrEmpty(userId))
                 return Challenge();
