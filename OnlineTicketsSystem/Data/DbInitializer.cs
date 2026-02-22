@@ -27,7 +27,7 @@ namespace OnlineTicketsSystem.Data
                 {
                     var env = services.GetRequiredService<Microsoft.AspNetCore.Hosting.IWebHostEnvironment>();
 
-                    // Път 1: проектната папка (ContentRootPath)
+                    
                     var path1 = Path.Combine(env.ContentRootPath, "Data", "Seed", "cities-bg.txt");
 
                     // Път 2: output/bin папката (ако VS стартира оттам)
@@ -99,38 +99,7 @@ namespace OnlineTicketsSystem.Data
                     context.SaveChanges();
                 }
 
-                //// --- Събития ---
-                //if (!context.Events.Any())
-                //{
-                //    var events = new Event[]
-                //    {
-                //        new Event
-                //        {
-                //            Title = "Концерт на популярна група",
-                //            Description = "Музика на живо в Разград",
-                //            City = "Разград",
-                //            Venue = "Общински културен център",
-                //            Date = DateTime.Now.AddDays(10),
-                //            Capacity = 100,
-                //            ImageUrl = "",
-                //            CategoryId = context.Categories.First(c => c.Name == "Концерт").Id
-                //        },
-                //        new Event
-                //        {
-                //            Title = "Театрална постановка",
-                //            Description = "Драма в Пловдив",
-                //            City = "Пловдив",
-                //            Venue = "Античен театър",
-                //            Date = DateTime.Now.AddDays(15),
-                //            Capacity = 50,
-                //            ImageUrl = "",
-                //            CategoryId = context.Categories.First(c => c.Name == "Театър").Id
-                //        }
-                //    };
-                //    context.Events.AddRange(events);
-                //    context.SaveChanges();
-                //}
-
+                
 
             // --- Събития ---
             var eventsToSeed = new List<Event>
@@ -234,28 +203,6 @@ namespace OnlineTicketsSystem.Data
 };
 
 
-
-                //foreach (var ev in eventsToSeed)
-                //{
-                //    var existing = context.Events.FirstOrDefault(e => e.Title == ev.Title);
-                //    if (existing == null)
-                //    {
-                //        context.Events.Add(ev);
-                //    }
-                //    else
-                //    {
-                //        // обновяване на полета (важното за нас: Price)
-                //        existing.Description = ev.Description;
-                //        existing.City = ev.City;
-                //        existing.Venue = ev.Venue;
-                //        existing.Date = ev.Date;
-                //        existing.Capacity = ev.Capacity;
-                //        existing.ImageUrl = ev.ImageUrl;
-                //        existing.CategoryId = ev.CategoryId;
-                //        existing.Price = ev.Price;
-                //    }
-                //}
-                //context.SaveChanges();
                 foreach (var ev in eventsToSeed)
                 {
                     var existing = context.Events.FirstOrDefault(e => e.Title == ev.Title);

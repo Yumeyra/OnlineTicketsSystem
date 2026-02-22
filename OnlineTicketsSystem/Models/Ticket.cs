@@ -8,8 +8,6 @@ namespace OnlineTicketsSystem.Models
     {
         public int Id { get; set; }
 
-        
-
         // Event
         public int EventId { get; set; }
         public Event Event { get; set; } = null!;

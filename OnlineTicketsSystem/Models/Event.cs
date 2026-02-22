@@ -45,7 +45,7 @@ namespace OnlineTicketsSystem.Models
         public City? CityEntity { get; set; }
         [Column(TypeName = "decimal(10,2)")]
         [Range(0, 999999)]
-        public decimal Price { get; set; }  // цена в EUR
+        public decimal Price { get; set; } 
 
         public bool IsDeleted { get; set; } = false;
         public DateTime? DeletedAt { get; set; }
