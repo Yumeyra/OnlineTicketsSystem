@@ -8,6 +8,15 @@ namespace OnlineTicketsSystem.ViewModels
 
         public int SoldTickets { get; set; }
         public int RemainingSeats { get; set; }
-        public bool IsSoldOut => RemainingSeats <= 0;
+       
+
+        // Reviews
+        public double AverageRating { get; set; }
+        public int ReviewsCount { get; set; }
+        public List<Review> Reviews { get; set; } = new();
+
+        // Permissions
+        public bool CanReview { get; set; }          // има ли платен билет
+        public bool UserHasReviewed { get; set; }    // вече писал ли е
     }
 }

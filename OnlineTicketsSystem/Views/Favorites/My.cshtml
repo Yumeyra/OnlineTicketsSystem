@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model IEnumerable<OnlineTicketsSystem.Models.Favorite>
+
+<h1>Моите любими</h1>
+
+@if (!Model.Any())
+{
+    <p>Нямаш добавени любими събития.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Събитие</th>
+                <th>Град</th>
+                <th>Дата</th>
+                <th>Цена</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var f in Model)
+            {
+                <tr>
+                    <td>@f.Event.Title</td>
+                    <td>@f.Event.City</td>
+                    <td>@f.Event.Date.ToShortDateString()</td>
+                    <td>@f.Event.Price.ToString("0.00") EUR</td>
+                    <td>
+                        <form asp-controller="Favorites" asp-action="Remove" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="eventId" value="@f.EventId" />
+                            <button class="btn btn-sm btn-danger" type="submit">Премахни</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -162,7 +162,50 @@ namespace OnlineTicketsSystem.Controllers
         }
 
 
-       
+
+        //[Authorize]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Checkout()
+        //{
+        //    var cart = HttpContext.Session.GetObject<CartVm>(CartKey) ?? new CartVm();
+
+        //    if (!cart.Items.Any())
+        //    {
+        //        TempData["Message"] = "Кошницата е празна.";
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    var userId = _userManager.GetUserId(User);
+        //    if (string.IsNullOrEmpty(userId))
+        //    {
+        //        TempData["Message"] = "Трябва да влезеш в профила си, за да платиш.";
+        //        return RedirectToAction("Index");
+        //    }
+
+
+        //    foreach (var item in cart.Items)
+        //    {
+        //        var pending = await _context.Tickets
+        //            .FirstOrDefaultAsync(t => t.UserId == userId && t.EventId == item.EventId && !t.IsPaid);
+
+        //        if (pending == null) continue;
+
+        //        pending.IsPaid = true;
+        //        pending.PaidAt = DateTime.Now;
+        //        pending.UnitPrice = item.Price; // ако цената е сменена, обновяваме
+        //        pending.Quantity = item.Quantity;
+        //    }
+
+        //    await _context.SaveChangesAsync();
+
+
+        //    // чистим кошницата
+        //    HttpContext.Session.Remove(CartKey);
+
+        //    TempData["Message"] = "Плащането е успешно (симулация). Билетите са закупени.";
+        //    return RedirectToAction("Index");
+        //}
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -183,32 +226,57 @@ namespace OnlineTicketsSystem.Controllers
                 return RedirectToAction("Index");
             }
 
-            
+            // 1) Проверка за капацитет (важно!)
             foreach (var item in cart.Items)
             {
-                var pending = await _context.Tickets
-                    .FirstOrDefaultAsync(t => t.UserId == userId && t.EventId == item.EventId && !t.IsPaid);
+                var ev = await _context.Events.FirstOrDefaultAsync(e => e.Id == item.EventId);
+                if (ev == null)
+                {
+                    TempData["Message"] = "Някое събитие вече не е налично.";
+                    return RedirectToAction("Index");
+                }
 
-                if (pending == null) continue;
+                var sold = await _context.Tickets
+                    .Where(t => t.EventId == item.EventId)
+                    .SumAsync(t => (int?)t.Quantity) ?? 0;
 
-                pending.IsPaid = true;
-                pending.PaidAt = DateTime.Now;
-                pending.UnitPrice = item.Price; // ако цената е сменена, обновяваме
-                pending.Quantity = item.Quantity;
+                var remaining = ev.Capacity - sold;
+
+                if (item.Quantity > remaining)
+                {
+                    TempData["Message"] = $"Няма достатъчно свободни места за \"{ev.Title}\". Остават: {remaining}.";
+                    return RedirectToAction("Index");
+                }
+            }
+
+            // 2) Създаваме платени билети
+            foreach (var item in cart.Items)
+            {
+                var ticket = new Ticket
+                {
+                    UserId = userId,
+                    EventId = item.EventId,
+                    Quantity = item.Quantity,
+                    UnitPrice = item.Price,
+                    IsPaid = true,
+                    PaidAt = DateTime.UtcNow,
+                    PurchaseDate = DateTime.UtcNow
+                };
+
+                _context.Tickets.Add(ticket);
             }
 
             await _context.SaveChangesAsync();
 
-
-            // чистим кошницата
+            // 3) чистим кошницата
             HttpContext.Session.Remove(CartKey);
 
             TempData["Message"] = "Плащането е успешно (симулация). Билетите са закупени.";
-            return RedirectToAction("Index");
+            return RedirectToAction("My", "Tickets");
         }
 
 
-       
+
     }
 }
 
