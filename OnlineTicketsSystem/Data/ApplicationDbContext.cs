@@ -21,10 +21,36 @@ namespace OnlineTicketsSystem.Data
             : base(options)
         {
         }
+        //    protected override void OnModelCreating(ModelBuilder builder)
+        //    {
+        //        builder.Entity<City>()
+        //.HasIndex(c => new { c.Name, c.Region })
+        //.IsUnique();
+        //        base.OnModelCreating(builder);
+
+        //        builder.Entity<Event>().HasQueryFilter(e => !e.IsDeleted);
+        //        builder.Entity<Ticket>().HasQueryFilter(t => !t.IsDeleted);
+        //        builder.Entity<Category>().HasQueryFilter(c => !c.IsDeleted);
+        //        builder.Entity<City>().HasQueryFilter(c => !c.IsDeleted);
+        //        builder.Entity<Favorite>().HasQueryFilter(f => !f.IsDeleted);
+        //        builder.Entity<Review>().HasQueryFilter(r => !r.IsDeleted);
+        //        builder.Entity<Order>().HasQueryFilter(o => !o.IsDeleted);
+        //        builder.Entity<OrderItem>().HasQueryFilter(oi => !oi.IsDeleted);
+
+
+        //        builder.Entity<Ticket>().Property(t => t.UnitPrice).HasPrecision(18, 2);
+        //        builder.Entity<Order>().Property(o => o.TotalAmount).HasPrecision(18, 2);
+        //        builder.Entity<OrderItem>().Property(oi => oi.UnitPrice).HasPrecision(18, 2);
+
+        //        builder.Entity<Favorite>()
+        //    .HasIndex(f => new { f.UserId, f.EventId })
+        //    .IsUnique();
+        //    }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-          
+
+            // Query filters (soft delete)
             builder.Entity<Event>().HasQueryFilter(e => !e.IsDeleted);
             builder.Entity<Ticket>().HasQueryFilter(t => !t.IsDeleted);
             builder.Entity<Category>().HasQueryFilter(c => !c.IsDeleted);
@@ -34,17 +60,23 @@ namespace OnlineTicketsSystem.Data
             builder.Entity<Order>().HasQueryFilter(o => !o.IsDeleted);
             builder.Entity<OrderItem>().HasQueryFilter(oi => !oi.IsDeleted);
 
-
+            // Precision
             builder.Entity<Ticket>().Property(t => t.UnitPrice).HasPrecision(18, 2);
             builder.Entity<Order>().Property(o => o.TotalAmount).HasPrecision(18, 2);
             builder.Entity<OrderItem>().Property(oi => oi.UnitPrice).HasPrecision(18, 2);
 
+            // Unique favorite
             builder.Entity<Favorite>()
-        .HasIndex(f => new { f.UserId, f.EventId })
-        .IsUnique();
+                .HasIndex(f => new { f.UserId, f.EventId })
+                .IsUnique();
+
+            // ✅ Unique city per region
+            builder.Entity<City>()
+                .HasIndex(c => new { c.Name, c.Region })
+                .IsUnique();
         }
 
-            public override int SaveChanges()
+        public override int SaveChanges()
         {
             ApplySoftDelete();
             return base.SaveChanges();

@@ -4,6 +4,7 @@
 @section Styles {
     <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
 }
+
 @{
     ViewData["HideMainNav"] = true;
 }
@@ -13,10 +14,9 @@
         <div class="hero__overlay"></div>
 
         <div class="container hero__content">
-            
+
             <div class="hero__top">
                 <a class="brand" asp-controller="Home" asp-action="Index">
-                    @* <span class="brand__icon"></span> *@
                     <span class="brand__name">EventAura</span>
                 </a>
 
@@ -44,7 +44,6 @@
                 </div>
             </div>
 
-
             <div class="hero__grid">
                 <div class="hero__left">
                     <h1 class="hero__title">Открий и резервирай<br />следващото си събитие</h1>
@@ -59,81 +58,125 @@
                         <div class="upcoming__header">
                             <h2 class="section-title">Предстоящи събития</h2>
                         </div>
-                        @* <form method="get" class="filters">
-                            <!-- Категории -->
-                            <select name="category" class="filter">
+
+                        <!-- ✅ Филтър форма (работеща) -->
+                        <form asp-controller="Home" asp-action="Index" method="get" class="filtersForm">
+
+                            <!-- Категория -->
+                            <select name="categoryId" class="filter">
                                 <option value="">Всички категории</option>
-                                @foreach (var cat in Model.Categories)
+                                @foreach (var c in Model.Categories)
                                 {
-                                    <option value="@cat">@cat</option>
+                                    if (Model.SelectedCategoryId == c.Id)
+                                    {
+                                        <option value="@c.Id" selected>@c.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@c.Id">@c.Name</option>
+                                    }
                                 }
                             </select>
 
-                            <!-- Градове с търсачка -->
-                            <input class="filter"
-                                   name="city"
-                                   list="citiesList"
-                                   placeholder="Търси град…" />
-
-                            <datalist id="citiesList">
-                                @foreach (var c in Model.Cities)
+                            <!-- ✅ Област -->
+                            <select name="selectedRegion" class="filter" onchange="this.form.submit()">
+                                <option value="">Избери област</option>
+                                @foreach (var r in Model.Regions)
                                 {
-                                    <option value="@c"></option>
+                                    if (Model.SelectedRegion == r)
+                                    {
+                                        <option value="@r" selected>@r</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@r">@r</option>
+                                    }
                                 }
-                            </datalist>
+                            </select>
 
-                            <!-- Дати -->
-                            <select name="dateMode" class="filter">
+                            <!-- ✅ Град: активен само ако има избрана област -->
+                            @if (string.IsNullOrWhiteSpace(Model.SelectedRegion))
+                            {
+                                <select class="filter" disabled>
+                                    <option>Първо избери област</option>
+                                </select>
+                            }
+                            else
+                            {
+                                <select name="selectedCity" class="filter">
+                                    <option value="">Всички градове</option>
+
+                                    @foreach (var cityName in (Model.CitiesInRegion ?? new List<string>()).Distinct())
+                                    {
+                                        if (Model.SelectedCity == cityName)
+                                        {
+                                            <option value="@cityName" selected>@cityName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@cityName">@cityName</option>
+                                        }
+                                    }
+                                </select>
+                            }
+
+                            <!-- Дата -->
+                            <select name="dateRange" class="filter">
                                 <option value="">Предстоящи дати</option>
-                                <option value="thisWeek">Тази седмица</option>
-                                <option value="thisMonth">Този месец</option>
-                                <option value="nextMonth">Следващ месец</option>
+
+                                @if (Model.DateRange == "week")
+                                {
+                                    <option value="week" selected>Тази седмица</option>
+                                }
+                                else
+                                {
+                                    <option value="week">Тази седмица</option>
+                                }
+
+                                @if (Model.DateRange == "month")
+                                {
+                                    <option value="month" selected>Този месец</option>
+                                }
+                                else
+                                {
+                                    <option value="month">Този месец</option>
+                                }
                             </select>
 
                             <!-- Цена -->
                             <select name="priceRange" class="filter">
                                 <option value="">Ценови диапазон</option>
-                                <option value="0-5">0–5 EUR</option>
-                                <option value="5-10">5–10 EUR</option>
-                                <option value="10-15">10–15 EUR</option>
-                                <option value="15-20">15–20 EUR</option>
-                            </select>
-                            <button type="submit" class="btn btn-primary btn-sm filter-btn">
-                                Търси
-                            </button>
 
-                        </form> *@
-                        <form asp-controller="Home" asp-action="Index" method="get" class="filtersForm">
-                            <select name="categoryId" class="filter">
-                                <option value="">Всички категории</option>
-                                @foreach (var c in Model.Categories)
+                                @if (Model.PriceRange == "0-10")
                                 {
-                                    <option value="@c.Id" selected="@(Model.SelectedCategoryId == c.Id)">
-                                        @c.Name
-                                    </option>
+                                    <option value="0-10" selected>0 – 10 EUR</option>
                                 }
-                            </select>
+                                else
+                                {
+                                    <option value="0-10">0 – 10 EUR</option>
+                                }
 
-                            <input name="city" class="filter" placeholder="Търси град..."
-                                   value="@Model.City" />
+                                @if (Model.PriceRange == "10-20")
+                                {
+                                    <option value="10-20" selected>10 – 20 EUR</option>
+                                }
+                                else
+                                {
+                                    <option value="10-20">10 – 20 EUR</option>
+                                }
 
-                            <select name="dateRange" class="filter">
-                                <option value="">Предстоящи дати</option>
-                                <option value="week" selected="@(Model.DateRange == "week")">Тази седмица</option>
-                                <option value="month" selected="@(Model.DateRange == "month")">Този месец</option>
-                            </select>
-
-                            <select name="priceRange" class="filter">
-                                <option value="">Ценови диапазон</option>
-                                <option value="0-10" selected="@(Model.PriceRange == "0-10")">0 – 10 EUR</option>
-                                <option value="10-20" selected="@(Model.PriceRange == "10-20")">10 – 20 EUR</option>
-                                <option value="20+" selected="@(Model.PriceRange == "20+")">20+ EUR</option>
+                                @if (Model.PriceRange == "20+")
+                                {
+                                    <option value="20+" selected>20+ EUR</option>
+                                }
+                                else
+                                {
+                                    <option value="20+">20+ EUR</option>
+                                }
                             </select>
 
                             <button type="submit" class="btn btn-primary btn-search">Търси</button>
                         </form>
-
-                       
 
                         <div class="cards">
                             @foreach (var e in Model.UpcomingEvents)
@@ -171,7 +214,7 @@
                 </div>
 
                 <div class="hero__right">
-                    <!-- оставяме празно/за бъдещо: може да сложим mini banner или статистика -->
+                    <!-- оставяме празно/за бъдещо -->
                 </div>
             </div>
         </div>
@@ -218,7 +261,7 @@
                 {
                     if (CitySlugMap.TryGetSlug(city, out var slug))
                     {
-                        var cityImg = "/images/cities/default.jpg"; // можеш после да сложиш реални снимки
+                        var cityImg = "/images/cities/default.jpg";
 
                         <a class="city" asp-controller="Cities" asp-action="ByCity" asp-route-slug="@slug">
                             <div class="city__img" style="background-image:url('@cityImg');"></div>
@@ -228,7 +271,5 @@
                 }
             </div>
         </div>
-        
-
     </section>
 </div>

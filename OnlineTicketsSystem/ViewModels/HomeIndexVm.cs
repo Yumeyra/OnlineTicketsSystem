@@ -1,4 +1,6 @@
 ﻿using OnlineTicketsSystem.Models;
+
+
 namespace OnlineTicketsSystem.ViewModels
 {
     public class HomeIndexVm
@@ -17,6 +19,11 @@ namespace OnlineTicketsSystem.ViewModels
         public string? City { get; set; }
         public string? DateRange { get; set; }
         public string? PriceRange { get; set; }
+        public List<string> Regions { get; set; } = new();
+        public string? Region { get; set; }
+        public List<string> CitiesInRegion { get; set; } = new();
+        public string? SelectedRegion { get; set; }
+        public string? SelectedCity { get; set; }
 
 
     }

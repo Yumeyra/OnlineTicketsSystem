@@ -11,6 +11,11 @@ namespace OnlineTicketsSystem.Models
 
         [Required]
         public string Slug { get; set; } = null!;
+        
+        [Required]
+        [MaxLength(100)]
+        public string Region { get; set; } = null!;
+
 
         public bool IsDeleted { get; set; } = false;
         public DateTime? DeletedAt { get; set; }
