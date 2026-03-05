@@ -6,7 +6,7 @@
 }
 
 @{
-    ViewData["HideMainNav"] = true;
+    ViewData["HideMainNav"] = false ;
 }
 
 <div class="home">
@@ -20,12 +20,21 @@
                     <span class="brand__name">EventAura</span>
                 </a>
 
-                <nav class="hero__nav">
+                
+                <nav class="hero__nav d-flex align-items-center gap-3">
+
                     <a class="navlink" asp-controller="Home" asp-action="Index">Начало</a>
+
                     <a class="navlink" asp-controller="Events" asp-action="Index">Събития</a>
-                    <a class="navlink" asp-controller="Cities" asp-action="Index">Градове</a>
+
+                    <div class="hero-cities-dropdown">
+                        @await Component.InvokeAsync("CitiesMenu")
+                    </div>
+
                     <a class="navlink" asp-controller="Cart" asp-action="Index">Кошница</a>
+
                     <a class="navlink" asp-controller="Tickets" asp-action="My">Моите билети</a>
+
                 </nav>
 
                 <div class="hero__auth">
