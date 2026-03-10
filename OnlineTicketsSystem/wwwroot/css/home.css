@@ -1,36 +1,36 @@
 ﻿
 /* ========= HOME (Purple / Blue) ========= */
-:root {
+/*:root {
     --h-bg: #f4f6ff;
     --h-ink: #1c2148;
     --h-muted: rgba(28, 33, 72, .65);
     --h-surface: rgba(255,255,255,.72);
     --h-surface2: rgba(255,255,255,.56);
     --h-stroke: rgba(88, 95, 180, 0.18);
-    --h-accent: #6366f1; /* indigo */
-    --h-accent2: #4f46e5; /* deeper indigo */
-    --h-accent3: #a5b4fc; /* light indigo */
+    --h-accent: #6366f1;*/ /* indigo */
+    /*--h-accent2: #4f46e5;*/ /* deeper indigo */
+    /*--h-accent3: #a5b4fc;*/ /* light indigo */
 
-    --h-shadow: 0 22px 60px rgba(80, 90, 200, .16);
+    /*--h-shadow: 0 22px 60px rgba(80, 90, 200, .16);
     --h-shadow2: 0 16px 40px rgba(80, 90, 200, .12);
     --h-radius: 22px;
-}
+}*/
 
 /* Главен фон на home */
-.home {
+/*.home {
     background: radial-gradient(900px 520px at 20% 0%, rgba(99,102,241,.20), transparent 55%), radial-gradient(900px 520px at 80% 25%, rgba(79,70,229,.16), transparent 55%), radial-gradient(900px 520px at 50% 100%, rgba(165,180,252,.15), transparent 60%), var(--h-bg);
     color: var(--h-ink);
-}
+}*/
 
 /* HERO */
-.hero {
+/*.hero {
     position: relative;
     min-height: 100vh;
     padding: 60px 0 70px;
     overflow: hidden;
-    border-bottom: 1px solid var(--h-stroke);
+    border-bottom: 1px solid var(--h-stroke);*/
     /* ако имаш hero фон снимка */
-    background-image: linear-gradient(to bottom, rgba(244,246,255,.70), rgba(244,246,255,.92)), url("/images/home/hero.jpg");
+    /*background-image: linear-gradient(to bottom, rgba(244,246,255,.70), rgba(244,246,255,.92)), url("/images/home/hero.jpg");
     background-size: cover;
     background-position: center;
 }
@@ -49,14 +49,14 @@
 
 .hero__grid {
     display: grid;
-    grid-template-columns: 1fr; /* центрирано както при теб */
-    justify-items: center;
+    grid-template-columns: 1fr;*/ /* центрирано както при теб */
+    /*justify-items: center;
     text-align: center;
     gap: 28px;
-}
+}*/
 
 /* Заглавие */
-.hero__title {
+/*.hero__title {
     margin: 0 0 14px;
     font-weight: 850;
     letter-spacing: -0.3px;
@@ -65,19 +65,19 @@
     color: var(--h-ink);
     text-shadow: 0 10px 30px rgba(80, 90, 200, .12);
     max-width: 980px;
-}
+}*/
 
 /* Подзаглавие */
-.hero__subtitle {
+/*.hero__subtitle {
     margin: 0 0 18px;
     max-width: 680px;
     font-size: 16px;
     line-height: 1.65;
     color: var(--h-muted);
-}
+}*/
 
 /* CTA */
-.btn-home {
+/*.btn-home {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -97,10 +97,10 @@
         filter: brightness(1.02);
         transform: translateY(-1px);
         box-shadow: 0 16px 34px rgba(99,102,241,.32);
-    }
+    }*/
 
 /* UPCOMING box */
-.upcoming {
+/*.upcoming {
     width: 100%;
     max-width: 1500px;
     margin: 22px auto 0;
@@ -111,20 +111,20 @@
     padding: 22px 22px 26px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-}
+}*/
 
 /* Заглавия на секции */
-.section-title {
+/*.section-title {
     text-align: center;
     font-weight: 850;
     font-size: 26px;
     letter-spacing: .1px;
     margin: 4px 0 18px;
     color: var(--h-ink);
-}
+}*/
 
 /* FILTERS */
-.filters {
+/*.filters {
     display: grid;
     grid-template-columns: 1.1fr 1.1fr 1fr 1fr;
     gap: 14px;
@@ -143,10 +143,10 @@
 
         .filters input::placeholder {
             color: rgba(28,33,72,.45);
-        }
+        }*/
 
     /* dropdown стрелки за <select> */
-    .filters select {
+    /*.filters select {
         appearance: none;
         background-image: linear-gradient(45deg, transparent 50%, rgba(28,33,72,.70) 50%), linear-gradient(135deg, rgba(28,33,72,.70) 50%, transparent 50%);
         background-position: calc(100% - 18px) calc(50% - 3px), calc(100% - 12px) calc(50% - 3px);
@@ -157,10 +157,10 @@
         .filters input:focus, .filters select:focus {
             border-color: rgba(99,102,241,.55);
             box-shadow: 0 0 0 .2rem rgba(99,102,241,.18);
-        }
+        }*/
 
 /* Cards grid */
-.cards {
+/*.cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
@@ -186,10 +186,10 @@
     background-size: cover;
     background-position: center;
     filter: saturate(1.05) contrast(1.02);
-}
+}*/
 
 /* Body */
-.event-card__body {
+/*.event-card__body {
     padding: 14px 14px 16px;
 }
 
@@ -223,10 +223,10 @@
 
 .meta__row {
     margin: 4px 0;
-}
+}*/
 
 /* Button in card */
-.btn-card {
+/*.btn-card {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -244,10 +244,10 @@
     .btn-card:hover {
         background: rgba(99,102,241,.18);
         transform: translateY(-1px);
-    }
+    }*/
 
 /* WHY section */
-.why {
+/*.why {
     padding: 56px 0 18px;
 }
 
@@ -299,10 +299,10 @@
     color: rgba(28,33,72,.72);
     font-size: 13px;
     line-height: 1.5;
-}
+}*/
 
 /* CITIES section */
-.cities {
+/*.cities {
     padding: 22px 0 70px;
 }
 
@@ -341,17 +341,17 @@
     font-weight: 900;
     font-size: 18px;
     color: rgba(28,33,72,.90);
-}
+}*/
 
 /* Buttons in filters (ако имаш) */
-.filter-btn {
+/*.filter-btn {
     height: 48px;
     border-radius: 14px;
     white-space: nowrap;
-}
+}*/
 
 /* Layout sizing (както в твоя файл) */
-.home .container {
+/*.home .container {
     max-width: 1400px;
 }
 
@@ -359,10 +359,10 @@
     .home .container {
         max-width: 1600px;
     }
-}
+}*/
 
 /* Top nav inside hero (ако го ползваш) */
-.hero__top {
+/*.hero__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -412,10 +412,10 @@
     font-size: 15px;
     padding: 10px 16px;
     border-radius: 14px;
-}
+}*/
 
 /* ако ползваш filtersForm + btn-search */
-.filtersForm {
+/*.filtersForm {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 14px;
@@ -426,10 +426,10 @@
     grid-column: 1 / -1;
     justify-self: start;
     width: 260px;
-}
+}*/
 
 /* RESPONSIVE */
-@media (max-width: 1200px) {
+/*@media (max-width: 1200px) {
     .cards {
         grid-template-columns: repeat(2,1fr);
     }
@@ -470,12 +470,12 @@
     .filters {
         grid-template-columns: 1fr;
     }
-}
+}*/
 /* =================================
    IMPROVEMENT 1: Equal height cards
    ================================= */
 
-.cards {
+/*.cards {
     align-items: stretch;
 }
 
@@ -493,22 +493,22 @@
 
 .meta {
     flex-grow: 1;
-}
+}*/
 
 
 /* =================================
    IMPROVEMENT 2: Glow effect buttons
    ================================= */
 
-.btn-home,
+/*.btn-home,
 .btn-card {
     position: relative;
     overflow: hidden;
-}
+}*/
 
     /* glow animation */
 
-    .btn-home::before,
+    /*.btn-home::before,
     .btn-card::before {
         content: "";
         position: absolute;
@@ -521,16 +521,16 @@
     .btn-home:hover::before,
     .btn-card:hover::before {
         opacity: 1;
-    }
+    }*/
 
     /* small lift */
 
-    .btn-home:hover,
+    /*.btn-home:hover,
     .btn-card:hover {
         transform: translateY(-2px);
-    }
+    }*/
 /* FIX: allow navbar dropdown to appear above hero on Home */
-header, .navbar, .navbar-collapse {
+/*header, .navbar, .navbar-collapse {
     overflow: visible !important;
 }
 
@@ -541,10 +541,10 @@ header, .navbar, .navbar-collapse {
 
 .dropdown-menu {
     z-index: 7000 !important;
-}
+}*/
 
 /* ако hero/контейнер има transform, dropdown се чупи */
-.hero, .home-hero, .banner {
+/*.hero, .home-hero, .banner {
     transform: none !important;
 }
 .hero-cities-dropdown .dropdown-menu {
@@ -558,9 +558,9 @@ header, .navbar, .navbar-collapse {
     color: inherit;
     text-decoration: none;
     font-weight: 500;
-}
+}*/
 /* Make dropdown open in hero menu even without bootstrap JS */
-.hero-cities-dropdown {
+/*.hero-cities-dropdown {
     position: relative;
 }
 
@@ -574,10 +574,501 @@ header, .navbar, .navbar-collapse {
 
     .hero-cities-dropdown:hover .dropdown-menu {
         display: block;
-    }
+    }*/
 
     /* make sure it's clickable */
-    .hero-cities-dropdown,
+    /*.hero-cities-dropdown,
     .hero-cities-dropdown * {
         pointer-events: auto;
+    }*/
+
+
+
+/* ===========================
+   HOME PAGE
+   Purple / Modern / Clean
+   =========================== */
+
+:root {
+    --h-bg: #f6f4ff;
+    --h-ink: #1f1b4b;
+    --h-muted: rgba(31, 27, 75, 0.66);
+    --h-surface: rgba(255, 255, 255, 0.76);
+    --h-surface-strong: rgba(255, 255, 255, 0.90);
+    --h-stroke: rgba(115, 97, 255, 0.14);
+    --h-accent: #7c5cff;
+    --h-accent2: #6848f5;
+    --h-accent3: #b9a7ff;
+    --h-shadow: 0 22px 60px rgba(92, 78, 180, 0.16);
+    --h-shadow-soft: 0 16px 38px rgba(92, 78, 180, 0.12);
+    --h-shadow-hover: 0 24px 65px rgba(92, 78, 180, 0.18);
+    --h-radius: 26px;
+}
+
+/* Main home area */
+.home {
+    background: radial-gradient(900px 520px at 14% 0%, rgba(124, 92, 255, 0.15), transparent 58%), radial-gradient(900px 520px at 84% 14%, rgba(140, 110, 255, 0.12), transparent 58%), radial-gradient(900px 520px at 50% 100%, rgba(185, 167, 255, 0.12), transparent 60%), var(--h-bg);
+    color: var(--h-ink);
+}
+
+/* HERO */
+.hero {
+    position: relative;
+    min-height: auto;
+    padding: 56px 0 38px;
+    overflow: hidden;
+    border-bottom: 0;
+    background-image: linear-gradient(to bottom, rgba(246, 244, 255, 0.82), rgba(246, 244, 255, 0.96)), url("/images/home/hero.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(900px 520px at 18% 22%, rgba(124, 92, 255, 0.14), transparent 60%), radial-gradient(900px 520px at 78% 8%, rgba(104, 72, 245, 0.10), transparent 60%);
+    pointer-events: none;
+}
+
+.hero__content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 22px;
+}
+
+/* IMPORTANT:
+   Hide duplicated inner hero menu if it still exists.
+   This is temporary visual fix only.
+   Best solution is to remove it from Home/Index.cshtml.
+*/
+.hero__top {
+    display: none !important;
+}
+
+/* Title */
+.hero__title {
+    margin: 0 0 10px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    font-size: clamp(2.7rem, 5vw, 5rem);
+    line-height: 1.02;
+    color: var(--h-ink);
+    max-width: 960px;
+    text-shadow: 0 10px 30px rgba(92, 78, 180, 0.10);
+}
+
+/* Subtitle */
+.hero__subtitle {
+    margin: 0 0 10px;
+    max-width: 760px;
+    font-size: 1.12rem;
+    line-height: 1.75;
+    color: var(--h-muted);
+}
+
+/* Main CTA */
+.btn-home {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 240px;
+    border-radius: 18px;
+    padding: 15px 22px;
+    font-weight: 800;
+    font-size: 1rem;
+    text-decoration: none;
+    border: 1px solid rgba(124, 92, 255, 0.20);
+    background: linear-gradient(180deg, var(--h-accent), var(--h-accent2));
+    color: #fff;
+    box-shadow: 0 12px 28px rgba(124, 92, 255, 0.28);
+    transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+    .btn-home::before {
+        content: "";
+        position: absolute;
+        inset: -40%;
+        background: radial-gradient(circle, rgba(255,255,255,.22), transparent 60%);
+        opacity: 0;
+        transition: opacity .35s ease;
     }
+
+    .btn-home:hover::before {
+        opacity: 1;
+    }
+
+    .btn-home:hover {
+        filter: brightness(1.02);
+        transform: translateY(-2px);
+        box-shadow: 0 16px 34px rgba(124, 92, 255, 0.34);
+    }
+
+/* Upcoming section */
+.upcoming {
+    width: 100%;
+    max-width: 1520px;
+    margin: 24px auto 0;
+    background: var(--h-surface);
+    border: 1px solid var(--h-stroke);
+    border-radius: var(--h-radius);
+    box-shadow: var(--h-shadow);
+    padding: 28px 24px 30px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Section titles */
+.section-title {
+    text-align: center;
+    font-weight: 900;
+    font-size: clamp(1.8rem, 2.4vw, 2.5rem);
+    margin: 0 0 22px;
+    color: var(--h-ink);
+    letter-spacing: -0.02em;
+}
+
+/* Filters */
+.filters,
+.filtersForm {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 22px;
+    align-items: center;
+}
+
+    .filter,
+    .filters input,
+    .filters select,
+    .filtersForm input,
+    .filtersForm select {
+        width: 100%;
+        min-height: 52px;
+        border-radius: 18px;
+        padding: 14px 16px;
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid rgba(115, 97, 255, 0.18);
+        color: var(--h-ink);
+        outline: none;
+        font-size: 1rem;
+    }
+
+        .filters input::placeholder,
+        .filtersForm input::placeholder {
+            color: rgba(31, 27, 75, 0.42);
+        }
+
+    .filters select,
+    .filtersForm select {
+        appearance: none;
+        background-image: linear-gradient(45deg, transparent 50%, rgba(31, 27, 75, .66) 50%), linear-gradient(135deg, rgba(31, 27, 75, .66) 50%, transparent 50%);
+        background-position: calc(100% - 20px) calc(50% - 3px), calc(100% - 14px) calc(50% - 3px);
+        background-size: 6px 6px, 6px 6px;
+        background-repeat: no-repeat;
+    }
+
+        .filters input:focus,
+        .filters select:focus,
+        .filtersForm input:focus,
+        .filtersForm select:focus {
+            border-color: rgba(124, 92, 255, 0.52);
+            box-shadow: 0 0 0 .22rem rgba(124, 92, 255, 0.14);
+        }
+
+.btn-search,
+.filter-btn {
+    min-height: 52px;
+    border-radius: 18px;
+    white-space: nowrap;
+}
+
+/* Cards grid */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    align-items: stretch;
+}
+
+/* Event card */
+.event-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 22px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.84);
+    border: 1px solid rgba(115, 97, 255, 0.14);
+    box-shadow: var(--h-shadow-soft);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+    .event-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--h-shadow-hover);
+        border-color: rgba(124, 92, 255, 0.24);
+    }
+
+.event-card__img {
+    height: 190px;
+    background-size: cover;
+    background-position: center;
+    filter: saturate(1.03) contrast(1.02);
+}
+
+.event-card__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 16px 16px 18px;
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    font-size: .75rem;
+    font-weight: 900;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: rgba(185, 167, 255, 0.34);
+    border: 1px solid rgba(124, 92, 255, 0.14);
+    color: rgba(31, 27, 75, 0.92);
+    margin-bottom: 12px;
+}
+
+.event-card__title {
+    margin: 0 0 8px;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--h-ink);
+    line-height: 1.25;
+}
+
+.meta {
+    flex-grow: 1;
+    color: rgba(31, 27, 75, 0.72);
+    font-size: .95rem;
+    line-height: 1.55;
+    margin-bottom: 14px;
+}
+
+.meta__row {
+    margin: 4px 0;
+}
+
+/* Card button */
+.btn-card {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    font-weight: 800;
+    font-size: .98rem;
+    border: 1px solid rgba(124, 92, 255, 0.18);
+    background: rgba(124, 92, 255, 0.10);
+    color: var(--h-ink);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+
+    .btn-card::before {
+        content: "";
+        position: absolute;
+        inset: -40%;
+        background: radial-gradient(circle, rgba(185,167,255,.42), transparent 60%);
+        opacity: 0;
+        transition: opacity .35s ease;
+    }
+
+    .btn-card:hover::before {
+        opacity: 1;
+    }
+
+    .btn-card:hover {
+        background: rgba(124, 92, 255, 0.14);
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(124, 92, 255, 0.12);
+    }
+
+/* Why section */
+.why {
+    padding: 62px 0 18px;
+}
+
+.script-title {
+    text-align: center;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-weight: 900;
+    margin: 0 0 22px;
+    color: var(--h-ink);
+    letter-spacing: -0.03em;
+}
+
+.why__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.why__item {
+    display: flex;
+    gap: 14px;
+    padding: 20px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid var(--h-stroke);
+    box-shadow: 0 14px 34px rgba(92, 78, 180, 0.10);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.why__icon {
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    background: rgba(185, 167, 255, 0.34);
+    border: 1px solid rgba(124, 92, 255, 0.16);
+    flex-shrink: 0;
+}
+
+.why__text h3 {
+    margin: 0 0 6px;
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: var(--h-ink);
+}
+
+.why__text p {
+    margin: 0;
+    color: rgba(31, 27, 75, 0.70);
+    font-size: .96rem;
+    line-height: 1.6;
+}
+
+/* Cities section */
+.cities {
+    padding: 28px 0 74px;
+}
+
+.cities__grid {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.city {
+    text-decoration: none;
+    color: var(--h-ink);
+    text-align: center;
+}
+
+.city__img {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid rgba(124, 92, 255, 0.16);
+    box-shadow: 0 22px 55px rgba(92, 78, 180, 0.14);
+    transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
+}
+
+.city:hover .city__img {
+    transform: translateY(-5px);
+    filter: brightness(1.02);
+    box-shadow: 0 28px 68px rgba(92, 78, 180, 0.20);
+}
+
+.city__name {
+    font-weight: 900;
+    font-size: 1.12rem;
+    color: rgba(31, 27, 75, 0.92);
+}
+
+/* Layout sizing */
+.home .container {
+    max-width: 1420px;
+}
+
+@media (min-width: 1600px) {
+    .home .container {
+        max-width: 1560px;
+    }
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .filters,
+    .filtersForm {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .cities__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 34px 0 26px;
+    }
+
+    .hero__title {
+        font-size: clamp(2.2rem, 10vw, 3.2rem);
+    }
+
+    .hero__subtitle {
+        font-size: 1rem;
+    }
+
+    .why__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .city__img {
+        width: 160px;
+        height: 160px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cards,
+    .filters,
+    .filtersForm,
+    .cities__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .upcoming {
+        padding: 20px 16px 22px;
+    }
+
+    .btn-home {
+        width: 100%;
+    }
+}

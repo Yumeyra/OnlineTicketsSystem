@@ -1,9 +1,8 @@
-﻿
+﻿@* 
 @model OnlineTicketsSystem.Models.Event
 
 <form asp-action="Create" method="post">
-    @* <div asp-validation-summary="All" class="text-danger"></div>
-    <input asp-for="ImageUrl" class="form-control" /> *@
+   
 
 
     <div>
@@ -24,11 +23,6 @@
         <span asp-validation-for="Venue" class="text-danger"></span>
     </div>
 
-    @* <div>
-        <label asp-for="CategoryId">Категория</label>
-        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control"></select>
-        <span asp-validation-for="CategoryId" class="text-danger"></span>
-    </div> *@
 
     <div>
         <label asp-for="Date">Дата</label>
@@ -74,4 +68,70 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+ *@
+@model OnlineTicketsSystem.Models.Event
 
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-2">
+        <label asp-for="Title" class="form-label">Заглавие</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label asp-for="City" class="form-label">Град</label>
+        <input asp-for="City" class="form-control" />
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label asp-for="Venue" class="form-label">Място</label>
+        <input asp-for="Venue" class="form-control" />
+        <span asp-validation-for="Venue" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label asp-for="CategoryId" class="form-label">Категория</label>
+        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select">
+            <option value="">-- Избери категория --</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label asp-for="Date" class="form-label">Дата</label>
+        <input asp-for="Date" type="date" class="form-control" />
+        <span asp-validation-for="Date" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label asp-for="Capacity" class="form-label">Капацитет</label>
+        <input asp-for="Capacity" type="number" class="form-control" />
+        <span asp-validation-for="Capacity" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label asp-for="Price" class="form-label">Цена</label>
+        <input asp-for="Price" type="number" step="0.01" min="0" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Описание</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Плакат (изображение)</label>
+        <input type="file" name="posterFile" class="form-control" accept="image/*" />
+        <div class="form-text">JPG/PNG/WEBP до 5MB.</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Запази</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,283 @@
+﻿@model OnlineTicketsSystem.ViewModels.AdminDashboardViewModel
+
+@{
+    ViewData["Title"] = "Админ табло";
+}
+
+<h1 class="mb-4">Админ табло</h1>
+
+<div class="row g-3 mb-4">
+
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5>Общо събития</h5>
+                <h2>@Model.TotalEvents</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5>Продадени билети</h5>
+                <h2>@Model.TotalSoldTickets</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5>Общи приходи</h5>
+                <h2>@Model.TotalRevenue.ToString("F2") EUR</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row g-3 mb-4">
+
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5>Предстоящи събития</h5>
+                <h2>@Model.UpcomingEvents</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5>Минали събития</h5>
+                <h2>@Model.PastEvents</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5>Изчерпан капацитет</h5>
+                <h2>@Model.SoldOutEvents</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+
+        <h4 class="mb-3">Топ 5 събития</h4>
+
+        @if (Model.TopEvents.Any())
+        {
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Събитие</th>
+                        <th>Продадени билети</th>
+                        <th>Приход</th>
+                        <th>Капацитет</th>
+                        <th>Оставащи места</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model.TopEvents)
+                    {
+                        <tr>
+
+                            <td>@item.Title</td>
+
+                            <td>@item.SoldTickets</td>
+
+                            <td>@item.Revenue.ToString("F2") EUR</td>
+
+                            <td>@item.Capacity</td>
+
+                            <td>
+
+                                @if (item.RemainingSeats == 0)
+                                {
+                                    <span class="badge bg-danger">Изчерпано</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">
+                                        @item.RemainingSeats
+                                    </span>
+                                }
+
+                            </td>
+
+                            <td>
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.EventId"
+                                   class="btn btn-sm btn-warning">
+
+                                    Редакция
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+        }
+        else
+        {
+            <p>Все още няма данни за продадени билети.</p>
+        }
+
+    </div>
+</div>
+
+
+<div class="row g-4">
+
+
+    <div class="col-lg-6">
+
+        <div class="card shadow-sm border-0 h-100">
+
+            <div class="card-body">
+
+                <h4 class="mb-3">Последни покупки</h4>
+
+                @if (Model.RecentPurchases.Any())
+                {
+
+                    <table class="table table-striped align-middle">
+
+                        <thead>
+                            <tr>
+                                <th>Събитие</th>
+                                <th>Потребител</th>
+                                <th>Брой</th>
+                                <th>Сума</th>
+                                <th>Платено на</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in Model.RecentPurchases)
+                            {
+
+                                <tr>
+
+                                    <td>@item.EventTitle</td>
+
+                                    <td>
+                                        <div>@item.UserName</div>
+                                        <small class="text-muted">
+                                            @item.UserEmail
+                                        </small>
+                                    </td>
+
+                                    <td>@item.Quantity</td>
+
+                                    <td>
+                                        @item.TotalPrice.ToString("F2") EUR
+                                    </td>
+
+                                    <td>
+                                        @(item.PaidAt?.ToString("dd.MM.yyyy HH:mm") ?? "-")
+                                    </td>
+
+                                </tr>
+
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                }
+                else
+                {
+                    <p>Няма последни покупки.</p>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="col-lg-6">
+
+        <div class="card shadow-sm border-0 h-100">
+
+            <div class="card-body">
+
+                <h4 class="mb-3">Събития с изчерпан капацитет</h4>
+
+                @if (Model.SoldOutEventList.Any())
+                {
+
+                    <table class="table table-striped align-middle">
+
+                        <thead>
+                            <tr>
+                                <th>Събитие</th>
+                                <th>Дата</th>
+                                <th>Капацитет</th>
+                                <th>Продадени</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in Model.SoldOutEventList)
+                            {
+
+                                <tr>
+
+                                    <td>@item.Title</td>
+
+                                    <td>
+                                        @item.Date.ToString("dd.MM.yyyy")
+                                    </td>
+
+                                    <td>@item.Capacity</td>
+
+                                    <td>@item.SoldTickets</td>
+
+                                </tr>
+
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                }
+                else
+                {
+                    <p>Няма събития с изчерпан капацитет.</p>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>

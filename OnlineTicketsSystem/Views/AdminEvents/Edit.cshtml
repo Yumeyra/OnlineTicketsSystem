@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@* 
 @{
 }
 @model OnlineTicketsSystem.Models.Event
@@ -46,10 +44,7 @@
         <span class="text-danger" asp-validation-for="Capacity"></span>
     </div>
 
-    @* <div class="mb-2">
-        <label class="form-label">ImageUrl</label>
-        <input class="form-control" asp-for="ImageUrl" />
-    </div> *@
+    
 
     <div class="mb-3">
         <label class="form-label">Категория</label>
@@ -70,4 +65,73 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+ *@
+@model OnlineTicketsSystem.Models.Event
 
+<h1>Редакция на събитие</h1>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-2">
+        <label class="form-label">Заглавие</label>
+        <input class="form-control" asp-for="Title" />
+        <span class="text-danger" asp-validation-for="Title"></span>
+    </div>
+
+    <div class="mb-2">
+        <label class="form-label">Описание</label>
+        <textarea class="form-control" asp-for="Description"></textarea>
+    </div>
+
+    <div class="mb-2">
+        <label class="form-label">Град</label>
+        <input class="form-control" asp-for="City" />
+    </div>
+
+    <div class="mb-2">
+        <label class="form-label">Място</label>
+        <input class="form-control" asp-for="Venue" />
+    </div>
+
+    <div class="mb-2">
+        <label class="form-label">Дата</label>
+        <input class="form-control" asp-for="Date" type="date" />
+    </div>
+
+    <div class="mb-2">
+        <label class="form-label">Капацитет</label>
+        <input class="form-control" asp-for="Capacity" type="number" />
+    </div>
+
+    <div class="mb-2">
+        <label class="form-label">Цена</label>
+        <input class="form-control" asp-for="Price" type="number" step="0.01" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Категория</label>
+        <select class="form-select" asp-for="CategoryId" asp-items="ViewBag.Categories"></select>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+    {
+        <div class="mb-3">
+            <label class="form-label">Текущ плакат</label><br />
+            <img src="@Model.ImageUrl" alt="poster" style="max-width:260px;border-radius:14px;border:1px solid #ddd;" />
+        </div>
+    }
+
+    <div class="mb-3">
+        <label class="form-label">Смени плакат (по желание)</label>
+        <input type="file" name="posterFile" class="form-control" accept="image/*" />
+    </div>
+
+    <button class="btn btn-success" type="submit">Запази</button>
+    <a class="btn btn-secondary" asp-action="Index">Отказ</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
