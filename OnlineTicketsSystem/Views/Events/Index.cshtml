@@ -1,7 +1,6 @@
-﻿
+﻿@* 
 
-
-@model OnlineTicketsSystem.ViewModels.EventsIndexViewModel
+ @model OnlineTicketsSystem.ViewModels.EventsIndexViewModel
 
 @{
     ViewData["Title"] = "Събития";
@@ -99,6 +98,141 @@ else
             }
         </tbody>
     </table>
+} 
+
+ *@
+@model OnlineTicketsSystem.ViewModels.EventsIndexViewModel
+
+@{
+    ViewData["Title"] = "Събития";
 }
 
+<div class="container mt-4 mb-5">
+    <div class="mb-4">
+        <h1 class="fw-bold mb-2">Събития</h1>
+        <p class="text-muted mb-0">Разгледай всички предстоящи и минали събития.</p>
+    </div>
 
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-info border-0 rounded-4 shadow-sm">
+            @TempData["Message"]
+        </div>
+    }
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
+        <div class="card-header bg-transparent border-0 pt-4 px-4 pb-2">
+            <h2 class="fw-bold mb-0">Предстоящи</h2>
+        </div>
+
+        <div class="card-body p-0">
+            @if (Model == null || Model.Upcoming == null || !Model.Upcoming.Any())
+            {
+                <div class="p-4">
+                    <p class="mb-0 text-muted">Няма предстоящи събития.</p>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0 events-table">
+                        <thead>
+                            <tr>
+                                <th>Заглавие</th>
+                                <th>Град</th>
+                                <th>Място</th>
+                                <th>Категория</th>
+                                <th>Дата</th>
+                                <th>Цена</th>
+                                <th class="text-end pe-4"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var e in Model.Upcoming)
+                            {
+                                <tr>
+                                    <td class="fw-semibold">@e.Title</td>
+                                    <td>@e.City</td>
+                                    <td>@e.Venue</td>
+                                    <td>
+                                        <span class="badge rounded-pill bg-light text-dark border px-3 py-2">
+                                            @(e.Category != null ? e.Category.Name : "-")
+                                        </span>
+                                    </td>
+                                    <td>@e.Date.ToString("dd.MM.yyyy")</td>
+                                    <td class="fw-bold text-success">@e.Price.ToString("0.00") EUR</td>
+                                    <td class="text-end pe-4">
+                                        <a class="btn btn-outline-primary rounded-pill px-4"
+                                           asp-controller="Events"
+                                           asp-action="Details"
+                                           asp-route-id="@e.Id">
+                                            Детайли
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-header bg-transparent border-0 pt-4 px-4 pb-2">
+            <h2 class="fw-bold mb-0">Минали</h2>
+        </div>
+
+        <div class="card-body p-0">
+            @if (Model == null || Model.Past == null || !Model.Past.Any())
+            {
+                <div class="p-4">
+                    <p class="mb-0 text-muted">Няма минали събития.</p>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0 events-table">
+                        <thead>
+                            <tr>
+                                <th>Заглавие</th>
+                                <th>Град</th>
+                                <th>Място</th>
+                                <th>Категория</th>
+                                <th>Дата</th>
+                                <th>Цена</th>
+                                <th class="text-end pe-4"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var e in Model.Past)
+                            {
+                                <tr>
+                                    <td class="fw-semibold">@e.Title</td>
+                                    <td>@e.City</td>
+                                    <td>@e.Venue</td>
+                                    <td>
+                                        <span class="badge rounded-pill bg-light text-dark border px-3 py-2">
+                                            @(e.Category != null ? e.Category.Name : "-")
+                                        </span>
+                                    </td>
+                                    <td>@e.Date.ToString("dd.MM.yyyy")</td>
+                                    <td class="fw-bold text-success">@e.Price.ToString("0.00") EUR</td>
+                                    <td class="text-end pe-4">
+                                        <a class="btn btn-outline-primary rounded-pill px-4"
+                                           asp-controller="Events"
+                                           asp-action="Details"
+                                           asp-route-id="@e.Id">
+                                            Детайли
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -21,10 +21,11 @@ namespace OnlineTicketsSystem.Controllers
         //    _context = context;
         //    _env = env;
         //}
-        public AdminEventsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public AdminEventsController(ApplicationDbContext context, UserManager<IdentityUser> userManager, IWebHostEnvironment env)
         {
             _context = context;
             _userManager = userManager;
+            _env = env;
         }
 
         // GET: /AdminEvents

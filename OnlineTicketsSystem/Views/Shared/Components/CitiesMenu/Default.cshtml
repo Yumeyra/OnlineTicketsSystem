@@ -1,4 +1,4 @@
-﻿
+﻿@* 
 
 @model OnlineTicketsSystem.ViewModels.CitiesMenuVm
 
@@ -96,5 +96,102 @@
 
         });
 
+    });
+</script> *@
+@model OnlineTicketsSystem.ViewModels.CitiesMenuVm
+
+<a class="nav-link dropdown-toggle text-dark"
+   href="#"
+   id="citiesDropdown"
+   role="button"
+   data-bs-toggle="dropdown"
+   aria-expanded="false">
+    Градове
+</a>
+
+<div class="dropdown-menu p-3 cities-mega-menu" aria-labelledby="citiesDropdown">
+    <div class="row g-3">
+        <!-- Regions -->
+        <div class="col-12 col-lg-4">
+            <strong class="d-block mb-2">Области</strong>
+
+            <div class="regions-scroll">
+                <div class="list-group cities-region-list">
+                    @for (int i = 0; i < Model.Regions.Count; i++)
+                    {
+                        var r = Model.Regions[i];
+
+                        <button type="button"
+                                class="list-group-item list-group-item-action region-btn @(i == 0 ? "active" : "")"
+                                data-region="@r">
+                            @r
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Cities -->
+        <div class="col-12 col-lg-8">
+            <strong class="d-block mb-2">Градове</strong>
+
+            <div class="cities-scroll">
+                @for (int i = 0; i < Model.Regions.Count; i++)
+                {
+                    var r = Model.Regions[i];
+                    var cities = Model.CitiesByRegion[r];
+
+                    <div class="cities-panel"
+                         data-region="@r"
+                         style="display:@(i == 0 ? "block" : "none");">
+                        <div class="row g-2">
+                            @foreach (var c in cities)
+                            {
+                                <div class="col-12 col-md-6">
+                                    <a class="dropdown-item city-dropdown-link"
+                                       asp-controller="Cities"
+                                       asp-action="ByCity"
+                                       asp-route-slug="@c.Slug">
+                                        @c.Name
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const menu = document.querySelector(".cities-mega-menu");
+        if (!menu) return;
+
+        const regions = menu.querySelectorAll(".region-btn");
+        const panels = menu.querySelectorAll(".cities-panel");
+
+        function show(region) {
+            panels.forEach(function (p) {
+                p.style.display = (p.dataset.region === region) ? "block" : "none";
+            });
+
+            regions.forEach(function (r) {
+                r.classList.toggle("active", r.dataset.region === region);
+            });
+        }
+
+        regions.forEach(function (btn) {
+            btn.addEventListener("mouseenter", function () {
+                if (window.innerWidth >= 992) {
+                    show(btn.dataset.region);
+                }
+            });
+
+            btn.addEventListener("click", function () {
+                show(btn.dataset.region);
+            });
+        });
     });
 </script>

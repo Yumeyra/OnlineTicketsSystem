@@ -1,4 +1,4 @@
-﻿@model OnlineTicketsSystem.ViewModels.HomeIndexVm
+﻿@* @model OnlineTicketsSystem.ViewModels.HomeIndexVm
 @using OnlineTicketsSystem.Helpers
 
 @section Styles {
@@ -282,3 +282,553 @@
         </div>
     </section>
 </div>
+@model OnlineTicketsSystem.ViewModels.HomeIndexVm
+
+@{
+    ViewData["Title"] = "Начало";
+    var heroImages = ViewBag.HeroImages as List<string> ?? new List<string>();
+}
+
+<link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+
+<div class="home">
+
+    <section class="hero">
+        <div class="hero__bg" id="heroBg">
+            @if (heroImages.Any())
+            {
+                for (int i = 0; i < heroImages.Count; i++)
+                {
+                    <div class="hero__slide @(i == 0 ? "is-active" : "")"
+                         style="background-image: url('@heroImages[i]');"></div>
+                }
+            }
+        </div>
+
+        <div class="hero__overlay"></div>
+
+        <div class="container hero__content">
+            <div class="hero__grid">
+                <h1 class="hero__title">Открий и резервирай следващото си събитие</h1>
+
+                <p class="hero__subtitle">
+                    Намерете най-добрите концерти, театрални постановки, фестивали и спортни събития близо до вас.
+                </p>
+
+                <a asp-controller="Events" asp-action="Index" class="btn-home">
+                    Разгледай събития
+                </a>
+            </div>
+
+            <section class="upcoming">
+                <h2 class="section-title">Предстоящи събития</h2>
+
+                <form method="get" asp-action="Index" class="filtersForm">
+                    <select name="categoryId" class="form-select">
+                        <option value="">Всички категории</option>
+                        @foreach (var category in Model.Categories)
+                        {
+                            if (Model.SelectedCategoryId == category.Id)
+                            {
+                                <option value="@category.Id" selected>@category.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@category.Id">@category.Name</option>
+                            }
+                        }
+                    </select>
+
+                    <select name="selectedRegion" class="form-select" onchange="this.form.submit()">
+                        <option value="">Избери област</option>
+                        @foreach (var region in Model.Regions)
+                        {
+                            if (Model.SelectedRegion == region)
+                            {
+                                <option value="@region" selected>@region</option>
+                            }
+                            else
+                            {
+                                <option value="@region">@region</option>
+                            }
+                        }
+                    </select>
+
+                    <select name="selectedCity" class="form-select">
+                        <option value="">Избери град</option>
+                        @foreach (var city in Model.CitiesInRegion)
+                        {
+                            if (Model.SelectedCity == city)
+                            {
+                                <option value="@city" selected>@city</option>
+                            }
+                            else
+                            {
+                                <option value="@city">@city</option>
+                            }
+                        }
+                    </select>
+
+                    <select name="dateRange" class="form-select">
+                        <option value="">Предстоящи дати</option>
+                        @if (Model.DateRange == "week")
+                        {
+                            <option value="week" selected>До 7 дни</option>
+                        }
+                        else
+                        {
+                            <option value="week">До 7 дни</option>
+                        }
+
+                        @if (Model.DateRange == "month")
+                        {
+                            <option value="month" selected>До 1 месец</option>
+                        }
+                        else
+                        {
+                            <option value="month">До 1 месец</option>
+                        }
+                    </select>
+
+                    <select name="priceRange" class="form-select">
+                        <option value="">Ценови диапазон</option>
+                        @if (Model.PriceRange == "0-10")
+                        {
+                            <option value="0-10" selected>0 - 10</option>
+                        }
+                        else
+                        {
+                            <option value="0-10">0 - 10</option>
+                        }
+
+                        @if (Model.PriceRange == "10-20")
+                        {
+                            <option value="10-20" selected>10 - 20</option>
+                        }
+                        else
+                        {
+                            <option value="10-20">10 - 20</option>
+                        }
+
+                        @if (Model.PriceRange == "20+")
+                        {
+                            <option value="20+" selected>20+</option>
+                        }
+                        else
+                        {
+                            <option value="20+">20+</option>
+                        }
+                    </select>
+
+                    <button type="submit" class="btn btn-primary btn-search">Търси</button>
+                </form>
+
+                @if (Model.UpcomingEvents.Any())
+                {
+                    <div class="cards">
+                        @foreach (var item in Model.UpcomingEvents)
+                        {
+                            <div class="event-card">
+                                <div class="event-card__img"
+                                     style="background-image:url('@(string.IsNullOrWhiteSpace(item.ImageUrl) ? "/images/no-image.png" : item.ImageUrl)')">
+                                </div>
+
+                                <div class="event-card__body">
+                                    <span class="pill">@item.Category?.Name</span>
+
+                                    <h3 class="event-card__title">@item.Title</h3>
+
+                                    <div class="meta">
+                                        <div class="meta__row"><strong>Град:</strong> @item.City</div>
+                                        <div class="meta__row"><strong>Място:</strong> @item.Venue</div>
+                                        <div class="meta__row"><strong>Дата:</strong> @item.Date.ToString("dd.MM.yyyy HH:mm")</div>
+                                        <div class="meta__row"><strong>Цена:</strong> @item.Price.ToString("F2") EUR</div>
+                                    </div>
+
+                                    <a asp-controller="Events"
+                                       asp-action="Details"
+                                       asp-route-id="@item.Id"
+                                       class="btn-card">
+                                        Виж детайли
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="empty-state">
+                        Няма намерени предстоящи събития по избраните филтри.
+                    </div>
+                }
+            </section>
+        </div>
+    </section>
+
+    <section class="why">
+        <div class="container">
+            <h2 class="script-title">Защо да избереш нашата платформа</h2>
+
+            <div class="why__grid">
+                <div class="why__item">
+                    <div class="why__icon">🎟️</div>
+                    <div class="why__text">
+                        <h3>Лесна резервация</h3>
+                        <p>Бързо откриваш събития и резервираш билетите си само с няколко стъпки.</p>
+                    </div>
+                </div>
+
+                <div class="why__item">
+                    <div class="why__icon">📍</div>
+                    <div class="why__text">
+                        <h3>Търсене по град и категория</h3>
+                        <p>Филтрирай според местоположение, категория, дата и ценови диапазон.</p>
+                    </div>
+                </div>
+
+                <div class="why__item">
+                    <div class="why__icon">💜</div>
+                    <div class="why__text">
+                        <h3>Любими събития</h3>
+                        <p>Запазвай интересните предложения и се връщай към тях по всяко време.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cities">
+        <div class="container">
+            <h2 class="script-title">Популярни градове</h2>
+
+            @if (Model.Cities.Any())
+            {
+                <div class="cities__grid">
+                    @foreach (var city in Model.Cities)
+                    {
+                        <a asp-controller="Events"
+                           asp-action="Index"
+                           asp-route-selectedCity="@city"
+                           class="city">
+                            <div class="city__img" style="background-image:url('/images/cities/default-city.jpg');"></div>
+                            <div class="city__name">@city</div>
+                        </a>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="empty-state">Все още няма налични градове.</div>
+            }
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            const slides = document.querySelectorAll(".hero__slide");
+            if (!slides.length || slides.length === 1) return;
+
+            let current = 0;
+
+            setInterval(() => {
+                slides[current].classList.remove("is-active");
+                current = (current + 1) % slides.length;
+                slides[current].classList.add("is-active");
+            }, 4500);
+        })();
+    </script>
+} *@
+
+@model OnlineTicketsSystem.ViewModels.HomeIndexVm
+
+@{
+    ViewData["Title"] = "Начало";
+    var heroImages = ViewBag.HeroImages as List<string> ?? new List<string>();
+}
+
+<link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+
+<div class="home-page">
+
+    <section class="hero-modern">
+        <div class="hero-slider" id="heroSlider">
+            @if (heroImages.Any())
+            {
+                for (int i = 0; i < heroImages.Count; i++)
+                {
+                    <div class="hero-slide @(i == 0 ? "active" : "")"
+                         style="background-image:url('@heroImages[i]');"></div>
+                }
+            }
+            else
+            {
+                <div class="hero-slide active hero-fallback"></div>
+            }
+        </div>
+
+        <div class="hero-overlay"></div>
+
+        <div class="container hero-inner">
+            <div class="hero-content">
+                <h1 class="hero-title">Открий и резервирай следващото си събитие</h1>
+
+                <p class="hero-subtitle">
+                    Намерете най-добрите концерти, театрални постановки, фестивали и спортни събития близо до вас.
+                </p>
+
+                <a asp-controller="Events"
+                   asp-action="Index"
+                   class="hero-button">
+                    Разгледай събития
+                </a>
+            </div>
+
+            <div class="floating-search-box">
+                <form method="get" asp-action="Index" class="floating-search-form">
+                    <div class="search-field">
+                        <select name="categoryId" class="form-select">
+                            <option value="">Всички категории</option>
+                            @foreach (var category in Model.Categories)
+                            {
+                                if (Model.SelectedCategoryId == category.Id)
+                                {
+                                    <option value="@category.Id" selected>@category.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@category.Id">@category.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="search-field">
+                        <select name="selectedRegion" class="form-select" onchange="this.form.submit()">
+                            <option value="">Избери област</option>
+                            @foreach (var region in Model.Regions)
+                            {
+                                if (Model.SelectedRegion == region)
+                                {
+                                    <option value="@region" selected>@region</option>
+                                }
+                                else
+                                {
+                                    <option value="@region">@region</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="search-field">
+                        <select name="selectedCity" class="form-select">
+                            <option value="">Избери град</option>
+                            @foreach (var city in Model.CitiesInRegion)
+                            {
+                                if (Model.SelectedCity == city)
+                                {
+                                    <option value="@city" selected>@city</option>
+                                }
+                                else
+                                {
+                                    <option value="@city">@city</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="search-field">
+                        <select name="dateRange" class="form-select">
+                            <option value="">Предстоящи дати</option>
+
+                            @if (Model.DateRange == "week")
+                            {
+                                <option value="week" selected>До 7 дни</option>
+                            }
+                            else
+                            {
+                                <option value="week">До 7 дни</option>
+                            }
+
+                            @if (Model.DateRange == "month")
+                            {
+                                <option value="month" selected>До 1 месец</option>
+                            }
+                            else
+                            {
+                                <option value="month">До 1 месец</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="search-field">
+                        <select name="priceRange" class="form-select">
+                            <option value="">Ценови диапазон</option>
+
+                            @if (Model.PriceRange == "0-10")
+                            {
+                                <option value="0-10" selected>0 - 10 EUR</option>
+                            }
+                            else
+                            {
+                                <option value="0-10">0 - 10 EUR</option>
+                            }
+
+                            @if (Model.PriceRange == "10-20")
+                            {
+                                <option value="10-20" selected>10 - 20 EUR</option>
+                            }
+                            else
+                            {
+                                <option value="10-20">10 - 20 EUR</option>
+                            }
+
+                            @if (Model.PriceRange == "20+")
+                            {
+                                <option value="20+" selected>20+ EUR</option>
+                            }
+                            else
+                            {
+                                <option value="20+">20+ EUR</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="search-action">
+                        <button type="submit" class="btn search-btn">
+                            Търси
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="events-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Предстоящи събития</h2>
+                <p class="section-text">Разгледай най-интересните предложения и резервирай своето място навреме.</p>
+            </div>
+
+            @if (Model.UpcomingEvents.Any())
+            {
+                <div class="events-grid">
+                    @foreach (var item in Model.UpcomingEvents)
+                    {
+                        <div class="event-card-modern">
+                            <div class="event-card-image"
+                                 style="background-image:url('@(string.IsNullOrWhiteSpace(item.ImageUrl) ? "/images/no-image.png" : item.ImageUrl)')">
+                            </div>
+
+                            <div class="event-card-body">
+                                <span class="event-chip">
+                                    @(item.Category?.Name ?? "Събитие")
+                                </span>
+
+                                <h3 class="event-card-title">@item.Title</h3>
+
+                                <div class="event-meta">
+                                    <div><strong>Град:</strong> @item.City</div>
+                                    <div><strong>Място:</strong> @item.Venue</div>
+                                    <div><strong>Дата:</strong> @item.Date.ToString("dd.MM.yyyy HH:mm")</div>
+                                    <div><strong>Цена:</strong> @item.Price.ToString("F2") EUR</div>
+                                </div>
+
+                                <a asp-controller="Events"
+                                   asp-action="Details"
+                                   asp-route-id="@item.Id"
+                                   class="event-card-button">
+                                    Виж детайли
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="empty-box">
+                    Няма намерени предстоящи събития по избраните филтри.
+                </div>
+            }
+        </div>
+    </section>
+
+    <section class="why-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Защо да избереш EventAura</h2>
+            </div>
+
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-icon">🎟️</div>
+                    <h3>Лесна резервация</h3>
+                    <p>Бързо откриваш събития и резервираш билетите си само с няколко стъпки.</p>
+                </div>
+
+                <div class="why-card">
+                    <div class="why-icon">📍</div>
+                    <h3>Удобни филтри</h3>
+                    <p>Търси по категория, област, град, дата и ценови диапазон.</p>
+                </div>
+
+                <div class="why-card">
+                    <div class="why-icon">💜</div>
+                    <h3>Любими събития</h3>
+                    <p>Запазвай интересните предложения и се връщай към тях, когато поискаш.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cities-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Популярни градове</h2>
+            </div>
+
+            @if (Model.Cities.Any())
+            {
+                <div class="cities-grid">
+                    @foreach (var city in Model.Cities)
+                    {
+                        <a asp-controller="Events"
+                           asp-action="Index"
+                           asp-route-selectedCity="@city"
+                           class="city-card">
+                            <div class="city-image"></div>
+                            <div class="city-name">@city</div>
+                        </a>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="empty-box">
+                    Все още няма налични градове.
+                </div>
+            }
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            const slides = document.querySelectorAll(".hero-slide");
+            if (!slides.length || slides.length === 1) return;
+
+            let current = 0;
+
+            setInterval(() => {
+                slides[current].classList.remove("active");
+                current = (current + 1) % slides.length;
+                slides[current].classList.add("active");
+            }, 4500);
+        })();
+    </script>
+}
