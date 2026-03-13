@@ -814,6 +814,28 @@
             //         Все още няма налични градове.
             //     </div>
             // }
+            // @if (Model.Cities.Any())
+            // {
+            //     <div class="cities-grid">
+            //         @foreach (var city in Model.Cities)
+            //         {
+            //             <a asp-controller="Cities"
+            //                asp-action="ByCity"
+            //                asp-route-slug="@city.ToLower().Replace(" ", "-")"
+            //                class="city-card">
+            //                 <div class="city-image"></div>
+            //                 <div class="city-name">@city</div>
+            //             </a>
+            //         }
+            //     </div>
+            // }
+            // else
+            // {
+            //     <div class="empty-box">
+            //         Все още няма налични градове.
+            //     </div>
+            // }
+
             @if (Model.Cities.Any())
             {
                 <div class="cities-grid">
@@ -821,10 +843,10 @@
                     {
                         <a asp-controller="Cities"
                            asp-action="ByCity"
-                           asp-route-slug="@city.ToLower().Replace(" ", "-")"
+                           asp-route-slug="@city.Slug"
                            class="city-card">
                             <div class="city-image"></div>
-                            <div class="city-name">@city</div>
+                            <div class="city-name">@city.Name</div>
                         </a>
                     }
                 </div>

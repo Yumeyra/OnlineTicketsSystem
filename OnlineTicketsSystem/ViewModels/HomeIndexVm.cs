@@ -9,7 +9,8 @@ namespace OnlineTicketsSystem.ViewModels
         public List<Event> UpcomingEvents { get; set; } = new();
 
         // Градове (за секцията "Популярни градове")
-        public List<string> Cities { get; set; } = new();
+        //public List<string> Cities { get; set; } = new();
+        public List<City> Cities { get; set; } = new();
 
         // Категории (за dropdown)
         public List<Category> Categories { get; set; } = new();

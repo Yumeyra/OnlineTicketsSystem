@@ -221,12 +221,26 @@ namespace OnlineTicketsSystem.Controllers
                     .ToListAsync();
             }
 
-            var popularCities = await _context.Events
-                .Select(e => e.City)
-                .Distinct()
-                .OrderBy(c => c)
-                .Take(8)
+
+            var preferredCityOrder = new List<string>
+{
+    "София",
+    "Пловдив",
+    "Варна",
+    "Бургас",
+    "Русе",
+    "Стара Загора",
+    "Плевен",
+    "Велико Търново"
+};
+
+            var popularCities = await _context.Cities
+                .Where(c => !c.IsDeleted && preferredCityOrder.Contains(c.Name))
                 .ToListAsync();
+
+            popularCities = popularCities
+                .OrderBy(c => preferredCityOrder.IndexOf(c.Name))
+                .ToList();
 
             var heroImages = await _context.Events
                 .Where(e => !string.IsNullOrWhiteSpace(e.ImageUrl))
