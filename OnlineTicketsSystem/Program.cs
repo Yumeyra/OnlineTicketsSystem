@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using OnlineTicketsSystem.Data;
 using System.Globalization;
 using System;
+using OnlineTicketsSystem.Services;
+using OnlineTicketsSystem.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-//    .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false; // по-лесно за дипломна
@@ -31,6 +32,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ICityService, CityService>();
 
 var app = builder.Build();
 

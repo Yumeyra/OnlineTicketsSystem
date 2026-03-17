@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using OnlineTicketsSystem.Models;
+using OnlineTicketsSystem.Data.Seed;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -108,147 +109,31 @@ namespace OnlineTicketsSystem.Data
             // ==========
             // Categories
             // ==========
-            if (!context.Categories.Any())
-            {
-                var categories = new Category[]
-                {
-                    new Category { Name = "Театър" },
-                    new Category { Name = "Концерт" },
-                    new Category { Name = "Спорт" },
-                    new Category { Name = "Кино" }
-                };
-                context.Categories.AddRange(categories);
-                await context.SaveChangesAsync();
-            }
+            //if (!context.Categories.Any())
+            //{
+            //    var categories = new Category[]
+            //    {
+            //        new Category { Name = "Театър" },
+            //        new Category { Name = "Концерт" },
+            //        new Category { Name = "Спорт" },
+            //        new Category { Name = "Кино" },
+            //         new Category { Name = "Фестивал" },
+            //         new Category { Name =  "Комедия" },
+            //         new Category { Name = "Опера и балет"},
+            //         new Category { Name = "Детски събития" },
+            //           new Category { Name =  "Стендъп" },
+            //             new Category { Name =     "Изложба" },
 
-            // ======
-            // Events
-            // ======
-            var eventsToSeed = new List<Event>
-            {
-                new Event
-                {
-                    Title = "Рок концерт на открито",
-                    Description = "Голям рок концерт в центъра на София",
-                    City = "София",
-                    Venue = "Арена София",
-                    Price = 8.00m,
-                    Date = DateTime.Now.AddDays(20),
-                    Capacity = 500,
-                    ImageUrl = "",
-                    CategoryId = context.Categories.First(c => c.Name == "Концерт").Id
-                },
-                new Event
-                {
-                    Title = "Футболен мач",
-                    Description = "Дерби мач от първа лига",
-                    City = "Пловдив",
-                    Venue = "Стадион Пловдив",
-                    Price = 8.90m,
-                    Date = DateTime.Now.AddDays(12),
-                    Capacity = 800,
-                    ImageUrl = "",
-                    CategoryId = context.Categories.First(c => c.Name == "Спорт").Id
-                },
-                new Event
-                {
-                    Title = "Театрална комедия",
-                    Description = "Комедийна постановка",
-                    City = "Варна",
-                    Venue = "Драматичен театър",
-                    Price = 10.00m,
-                    Date = DateTime.Now.AddDays(18),
-                    Capacity = 200,
-                    ImageUrl = "",
-                    CategoryId = context.Categories.First(c => c.Name == "Театър").Id
-                },
-                new Event
-                {
-                    Title = "Кино премиера",
-                    Description = "Премиера на нов български филм",
-                    City = "Бургас",
-                    Venue = "Cinema City",
-                    Price = 12.90m,
-                    Date = DateTime.Now.AddDays(7),
-                    Capacity = 150,
-                    ImageUrl = "",
-                    CategoryId = context.Categories.First(c => c.Name == "Кино").Id
-                },
-                new Event
-                {
-                    Title = "Джаз вечер",
-                    Description = "Джаз концерт на живо",
-                    City = "Русе",
-                    Venue = "Културен дом",
-                    Price = 15.00m,
-                    Date = DateTime.Now.AddDays(25),
-                    Capacity = 120,
-                    ImageUrl = "",
-                    CategoryId = context.Categories.First(c => c.Name == "Концерт").Id
-                },
-                new Event
-                {
-                    Title = "Балетно представление",
-                    Description = "Класически балет",
-                    City = "Стара Загора",
-                    Venue = "Опера Стара Загора",
-                    Price = 16.50m,
-                    Date = DateTime.Now.AddDays(30),
-                    Capacity = 300,
-                    ImageUrl = "",
-                    CategoryId = context.Categories.First(c => c.Name == "Театър").Id
-                },
-                new Event
-                {
-                    Title = "Баскетболен турнир",
-                    Description = "Регионален турнир",
-                    City = "Плевен",
-                    Venue = "Спортна зала Плевен",
-                    Price = 10.00m,
-                    Date = DateTime.Now.AddDays(14),
-                    Capacity = 400,
-                    ImageUrl = "",
-                    CategoryId = context.Categories.First(c => c.Name == "Спорт").Id
-                },
-                new Event
-                {
-                    Title = "Фестивал на изкуствата",
-                    Description = "Изложби и музика",
-                    City = "Велико Търново",
-                    Venue = "Стария град",
-                    Price = 12.90m,
-                    Date = DateTime.Now.AddDays(40),
-                    Capacity = 600,
-                    ImageUrl = "",
-                    CategoryId = context.Categories.First(c => c.Name == "Концерт").Id
-                }
-            };
 
-            foreach (var ev in eventsToSeed)
-            {
-                var existingEvent = context.Events.FirstOrDefault(e => e.Title == ev.Title);
 
-                if (existingEvent == null)
-                {
-                    context.Events.Add(ev);
-                }
-                else
-                {
-                    existingEvent.Description = ev.Description;
-                    existingEvent.City = ev.City;
-                    existingEvent.Venue = ev.Venue;
-                    existingEvent.Date = ev.Date;
-                    existingEvent.Capacity = ev.Capacity;
-                    existingEvent.ImageUrl = ev.ImageUrl;
-                    existingEvent.CategoryId = ev.CategoryId;
-                    existingEvent.Price = ev.Price;
-                    existingEvent.IsDeleted = false;
-                    existingEvent.DeletedAt = null;
-                }
-            }
+            //    };
+            //    context.Categories.AddRange(categories);
+            //    await context.SaveChangesAsync();
+            //}
+            await CategorySeeder.SeedAsync(context);
 
-            await context.SaveChangesAsync();
-
+           
+            await EventSeeder.SeedAsync(context);
             // =====
             // Roles
             // =====
