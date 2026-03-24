@@ -18,7 +18,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = false; // по-лесно за дипломна
+    options.SignIn.RequireConfirmedAccount = false; 
 })
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -33,7 +33,13 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ICityService, CityService>();
-
+builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IHomeService, HomeService>();
+builder.Services.AddScoped<IAdminEventService, AdminEventService>();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<IFavoriteService, FavoriteService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

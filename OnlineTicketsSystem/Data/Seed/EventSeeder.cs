@@ -34,7 +34,7 @@ namespace OnlineTicketsSystem.Data.Seed
                 .ToDictionary(g => g.Key, g => g.First());
             var eventSeeds = new List<EventSeedItem>
             {
-                new("Лятна музикална вечер", "Вечер с популярна българска музика и специални гост-изпълнители.", "София", "НДК, Зала 1", DateTime.Today.AddDays(10).AddHours(20), 1200, "Концерт", 18.90m, "/images/events/concert-sofia.jpg"),
+                new("Лятна музикална вечер", "Вечер с популярна българска музика и специални гост-изпълнители.", "София", "НДК, Зала 1", DateTime.Today.AddDays(10).AddHours(20), 1200, "Концерт", 18.90m, "/images/events/Лятна музикална вечер.png"),
                 new("Комедия на сцена", "Съвременна комедийна постановка с динамичен сюжет и силен актьорски състав.", "София", "Народен театър", DateTime.Today.AddDays(7).AddHours(19), 350, "Театър", 14.50m, "/images/events/theater-sofia.jpg"),
                 new("Кино премиера: Град под светлините", "Премиерна прожекция на нов драматичен филм.", "София", "Cinema City Paradise", DateTime.Today.AddDays(5).AddHours(20), 160, "Кино", 9.90m, "/images/events/cinema-sofia.jpg"),
                 new("Дерби на столицата", "Футболен мач с голям интерес и очаквана силна атмосфера.", "София", "Национален стадион Васил Левски", DateTime.Today.AddDays(18).AddHours(18), 2500, "Спорт", 16.00m, "/images/events/sport-sofia.jpg"),

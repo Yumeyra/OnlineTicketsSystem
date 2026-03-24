@@ -32,7 +32,6 @@
     <Folder Include="Views\Shared\ate\" />
     <Folder Include="wwwroot\images\home\" />
     <Folder Include="wwwroot\images\events\" />
-    <Folder Include="wwwroot\uploads\events\" />
     <Folder Include="wwwroot\uploads\cities\" />
   </ItemGroup>
 
