@@ -35,12 +35,16 @@
 
             <div class="container">
 
-                <a class="navbar-brand brand-logo"
+                @* <a class="navbar-brand brand-logo"
                    asp-controller="Home"
                    asp-action="Index">
 
                     EventAura
 
+                </a> *@
+                <a class="navbar-brand d-flex align-items-center" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo.png" alt="Logo" style="height:95px; margin-right:45px;" />
+                    <span class="fw-bold"> EventAura</span>
                 </a>
 
                 <button class="navbar-toggler"
