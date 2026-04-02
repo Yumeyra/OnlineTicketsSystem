@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using OnlineTicketsSystem.Data;
-using System.Globalization;
-using System;
 using OnlineTicketsSystem.Services;
 using OnlineTicketsSystem.Services.Interfaces;
+using System;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +41,9 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IFavoriteService, FavoriteService>();
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+
 
 var app = builder.Build();
 

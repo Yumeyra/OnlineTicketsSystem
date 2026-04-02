@@ -104,6 +104,7 @@ namespace OnlineTicketsSystem.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -149,6 +150,7 @@ namespace OnlineTicketsSystem.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+
 
             // If we got this far, something failed, redisplay form
             return Page();
