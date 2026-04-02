@@ -1,7 +1,9 @@
 ﻿
 
 <!DOCTYPE html>
-<html lang="bg">
+ @* <html lang="bg">  *@
+<html lang="bg" data-bs-theme="light">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,9 +25,13 @@
     <!-- CSS -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  
+
 
     @RenderSection("Styles", required: false)
 </head>
+
 
 <body>
 
@@ -56,11 +62,12 @@
 
                 </button>
 
-                <div class="collapse navbar-collapse justify-content-between"
+                @* <div class="collapse navbar-collapse justify-content-between"
+                     id="mainNav"> *@
+                <div class="collapse navbar-collapse justify-content-between align-items-center"
                      id="mainNav">
-
-                    <ul class="navbar-nav">
-
+                    @* <ul class="navbar-nav"> *@
+                    <ul class="navbar-nav gap-3">
                         <li class="nav-item">
                             <a class="nav-link"
                                asp-controller="Home"
@@ -94,7 +101,15 @@
                                asp-action="Index">
                                 Кошница
                             </a>
-                        </li>
+                        </li> 
+                        @* <a class="nav-link position-relative"
+                           asp-controller="Cart"
+                           asp-action="Index">
+                            <i class="bi bi-cart3"></i> Кошница
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                0
+                            </span>
+                        </a> *@
 
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
                         {
@@ -125,8 +140,14 @@
                                 </a>
                             </li>
                         }
+                        <li class="nav-item d-flex align-items-center">
+                            <button onclick="toggleDarkMode()" class="btn btn-outline-primary ms-2 rounded-circle" style="width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;">
+                                <span id="theme-btn-icon">🌙</span>
+                            </button>
+                        </li>
 
                     </ul>
+                    
 
                     <div class="nav-auth">
 
@@ -179,8 +200,8 @@
             </a>
 
             </div>
-        
 
+        
     </main>
 
     <footer class="footer-modern">
@@ -196,6 +217,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
 
     @await RenderSectionAsync("Scripts", required: false)
 

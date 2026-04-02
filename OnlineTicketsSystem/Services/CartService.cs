@@ -1,9 +1,10 @@
-﻿using OnlineTicketsSystem.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineTicketsSystem.Data;
 using OnlineTicketsSystem.Helpers;
 using OnlineTicketsSystem.Models;
-using OnlineTicketsSystem.ViewModels;
-using Microsoft.EntityFrameworkCore;
 using OnlineTicketsSystem.Services.Interfaces;
+using OnlineTicketsSystem.ViewModels;
+using System.Diagnostics.Metrics;
 
 
 namespace OnlineTicketsSystem.Services
@@ -12,11 +13,14 @@ namespace OnlineTicketsSystem.Services
     {
         private const string CartKey = "CART";
         private readonly ApplicationDbContext _context;
+     
+
 
         public CartService(ApplicationDbContext context)
         {
             _context = context;
         }
+     
 
         public CartVm GetCart(ISession session)
         {
@@ -39,6 +43,7 @@ namespace OnlineTicketsSystem.Services
                 return "Събитието е минало.";
 
             var cart = GetCart(session);
+            
 
             var existing = cart.Items.FirstOrDefault(i => i.EventId == eventId);
             if (existing == null)

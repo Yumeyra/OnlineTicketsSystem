@@ -40,6 +40,7 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IFavoriteService, FavoriteService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
