@@ -34,6 +34,39 @@
 
 
 <body>
+    <div class="toast-container">
+        @if (TempData["Success"] != null)
+        {
+            <div class="eventaura-toast toast-success">
+                <span class="toast-icon">✔️</span>
+                @TempData["Success"]
+            </div>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="eventaura-toast toast-error">
+                <span class="toast-icon">❌</span>
+                @TempData["Error"]
+            </div>
+        }
+
+        @if (TempData["Warning"] != null)
+        {
+            <div class="eventaura-toast toast-warning">
+                <span class="toast-icon">⚠️</span>
+                @TempData["Warning"]
+            </div>
+        }
+
+        @if (TempData["Info"] != null)
+        {
+            <div class="eventaura-toast toast-info">
+                <span class="toast-icon">ℹ️</span>
+                @TempData["Info"]
+            </div>
+        }
+    </div>
 
     <header>
 
