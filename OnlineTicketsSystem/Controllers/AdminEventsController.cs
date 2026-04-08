@@ -1,94 +1,9 @@
 ﻿
-//using Microsoft.AspNetCore.Authorization;
-//using Microsoft.AspNetCore.Mvc;
-//using OnlineTicketsSystem.Models;
-//using OnlineTicketsSystem.Services.Interfaces;
-
-//namespace OnlineTicketsSystem.Controllers
-//{
-//    [Authorize(Roles = "Admin")]
-//    public class AdminEventsController : Controller
-//    {
-//        private readonly IAdminEventService _service;
-
-//        public AdminEventsController(IAdminEventService service)
-//        {
-//            _service = service;
-//        }
-
-//        public async Task<IActionResult> Index()
-//        {
-//            var events = await _service.GetAllEventsAsync();
-//            return View(events);
-//        }
-
-//        public async Task<IActionResult> Create()
-//        {
-//            ViewBag.Categories = await _service.GetCategoriesSelectListAsync();
-//            return View();
-//        }
-
-//        [HttpPost]
-//        public async Task<IActionResult> Create(Event ev, IFormFile? posterFile)
-//        {
-//            if (!ModelState.IsValid)
-//            {
-//                ViewBag.Categories = await _service.GetCategoriesSelectListAsync(ev.CategoryId);
-//                return View(ev);
-//            }
-
-//            await _service.CreateEventAsync(ev, posterFile);
-//            return RedirectToAction(nameof(Index));
-//        }
-
-//        public async Task<IActionResult> Edit(int id)
-//        {
-//            var ev = await _service.GetEventByIdAsync(id);
-//            if (ev == null) return NotFound();
-
-//            ViewBag.Categories = await _service.GetCategoriesSelectListAsync(ev.CategoryId);
-//            return View(ev);
-//        }
-
-//        [HttpPost]
-//        public async Task<IActionResult> Edit(int id, Event ev, IFormFile? posterFile)
-//        {
-//            if (!ModelState.IsValid)
-//            {
-//                ViewBag.Categories = await _service.GetCategoriesSelectListAsync(ev.CategoryId);
-//                return View(ev);
-//            }
-
-//            await _service.UpdateEventAsync(id, ev, posterFile);
-//            return RedirectToAction(nameof(Index));
-//        }
-
-//        public async Task<IActionResult> Delete(int id)
-//        {
-//            var ev = await _service.GetEventByIdAsync(id);
-//            if (ev == null) return NotFound();
-
-//            return View(ev);
-//        }
-
-//        [HttpPost, ActionName("Delete")]
-//        public async Task<IActionResult> DeleteConfirmed(int id)
-//        {
-//            await _service.SoftDeleteEventAsync(id);
-//            return RedirectToAction(nameof(Index));
-//        }
-
-//        public async Task<IActionResult> Dashboard()
-//        {
-//            var model = await _service.GetDashboardDataAsync();
-//            return View(model);
-//        }
-//    }
-//}
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineTicketsSystem.Models;
+using OnlineTicketsSystem.Services;
 using OnlineTicketsSystem.Services.Interfaces;
 
 namespace OnlineTicketsSystem.Controllers
@@ -205,6 +120,8 @@ namespace OnlineTicketsSystem.Controllers
         public async Task<IActionResult> Dashboard()
         {
             var model = await _service.GetDashboardDataAsync();
+            
+
             return View(model);
         }
     }

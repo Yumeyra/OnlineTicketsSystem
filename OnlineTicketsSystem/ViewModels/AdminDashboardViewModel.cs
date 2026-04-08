@@ -8,6 +8,8 @@
         public int UpcomingEvents { get; set; }
         public int PastEvents { get; set; }
         public int SoldOutEvents { get; set; }
+        public int TotalUsers { get; set; }
+
 
         public List<TopEventViewModel> TopEvents { get; set; } = new();
         public List<RecentPurchaseViewModel> RecentPurchases { get; set; } = new();

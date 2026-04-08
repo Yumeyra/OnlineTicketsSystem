@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlineTicketsSystem.Data;
 using OnlineTicketsSystem.Models;
+
 using OnlineTicketsSystem.Services.Interfaces;
 using OnlineTicketsSystem.ViewModels;
 namespace OnlineTicketsSystem.Services
@@ -12,6 +13,7 @@ namespace OnlineTicketsSystem.Services
     public class AdminEventService : IAdminEventService
     {
         private readonly ApplicationDbContext _context;
+       
         private readonly IWebHostEnvironment _env;
         private readonly UserManager<IdentityUser> _userManager;
 
@@ -19,6 +21,8 @@ namespace OnlineTicketsSystem.Services
             ApplicationDbContext context,
             IWebHostEnvironment env,
             UserManager<IdentityUser> userManager)
+           
+
         {
             _context = context;
             _env = env;
@@ -32,6 +36,8 @@ namespace OnlineTicketsSystem.Services
                 .OrderBy(e => e.Date)
                 .ToListAsync();
         }
+
+
 
         public async Task<SelectList> GetCategoriesSelectListAsync(int? selectedId = null)
         {
@@ -95,6 +101,56 @@ namespace OnlineTicketsSystem.Services
             await _context.SaveChangesAsync();
         }
 
+        //public async Task<AdminDashboardViewModel> GetDashboardDataAsync()
+        //{
+
+        //    var now = DateTime.Now;
+
+        //    var totalEvents = await _context.Events.CountAsync();
+
+        //    var paidTickets = _context.Tickets.Where(t => t.IsPaid);
+
+        //    var totalSoldTickets = await paidTickets.SumAsync(t => (int?)t.Quantity) ?? 0;
+        //    var totalRevenue = await paidTickets.SumAsync(t => (decimal?)(t.UnitPrice * t.Quantity)) ?? 0;
+
+        //    var upcomingEvents = await _context.Events.CountAsync(e => e.Date >= now);
+        //    var pastEvents = await _context.Events.CountAsync(e => e.Date < now);
+
+        //    var eventStats = await _context.Events
+        //        .Select(e => new TopEventViewModel
+        //        {
+        //            EventId = e.Id,
+        //            Title = e.Title,
+        //            Capacity = e.Capacity,
+        //            SoldTickets = _context.Tickets
+        //                .Where(t => t.EventId == e.Id && t.IsPaid)
+        //                .Sum(t => (int?)t.Quantity) ?? 0,
+        //            Revenue = _context.Tickets
+        //                .Where(t => t.EventId == e.Id && t.IsPaid)
+        //                .Sum(t => (decimal?)(t.UnitPrice * t.Quantity)) ?? 0
+        //        })
+        //        .ToListAsync();
+
+        //    foreach (var e in eventStats)
+        //    {
+        //        e.RemainingSeats = Math.Max(0, e.Capacity - e.SoldTickets);
+        //    }
+
+        //    var topEvents = eventStats
+        //        .OrderByDescending(e => e.SoldTickets)
+        //        .Take(5)
+        //        .ToList();
+
+        //    return new AdminDashboardViewModel
+        //    {
+        //        TotalEvents = totalEvents,
+        //        TotalSoldTickets = totalSoldTickets,
+        //        TotalRevenue = totalRevenue,
+        //        UpcomingEvents = upcomingEvents,
+        //        PastEvents = pastEvents,
+        //        TopEvents = topEvents
+        //    };
+        //}
         public async Task<AdminDashboardViewModel> GetDashboardDataAsync()
         {
             var now = DateTime.Now;
@@ -134,6 +190,9 @@ namespace OnlineTicketsSystem.Services
                 .Take(5)
                 .ToList();
 
+            // ⭐ ТУК ДОБАВЯМЕ ОБЩО ПОТРЕБИТЕЛИ
+            var totalUsers = await _userManager.Users.CountAsync();
+
             return new AdminDashboardViewModel
             {
                 TotalEvents = totalEvents,
@@ -141,7 +200,8 @@ namespace OnlineTicketsSystem.Services
                 TotalRevenue = totalRevenue,
                 UpcomingEvents = upcomingEvents,
                 PastEvents = pastEvents,
-                TopEvents = topEvents
+                TopEvents = topEvents,
+                TotalUsers = totalUsers // ⭐ И ТУК ГО ВРЪЩАМЕ
             };
         }
 

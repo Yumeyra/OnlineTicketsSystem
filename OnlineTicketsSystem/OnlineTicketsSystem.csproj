@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Identity\Data\" />
     <Folder Include="Views\Events\au\" />
     <Folder Include="Views\Shared\ate\" />
     <Folder Include="wwwroot\images\home\" />
