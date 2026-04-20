@@ -74,15 +74,9 @@
 
             <div class="container">
 
-                @* <a class="navbar-brand brand-logo"
-                   asp-controller="Home"
-                   asp-action="Index">
-
-                    EventAura
-
-                </a> *@
+              
                 <a class="navbar-brand d-flex align-items-center" asp-controller="Home" asp-action="Index">
-                    <img src="~/images/logo.png" alt="Logo" style="height:95px; margin-right:45px;" />
+                    <img src="~/images/logotwo.png" alt="Logo" style="height:95px; margin-right:45px;" />
                     <span class="fw-bold"> EventAura</span>
                 </a>
 
@@ -95,11 +89,10 @@
 
                 </button>
 
-                @* <div class="collapse navbar-collapse justify-content-between"
-                     id="mainNav"> *@
+              
                 <div class="collapse navbar-collapse justify-content-between align-items-center"
                      id="mainNav">
-                    @* <ul class="navbar-nav"> *@
+                
                     <ul class="navbar-nav gap-3">
                         <li class="nav-item">
                             <a class="nav-link"
@@ -135,14 +128,7 @@
                                 Кошница
                             </a>
                         </li> 
-                        @* <a class="nav-link position-relative"
-                           asp-controller="Cart"
-                           asp-action="Index">
-                            <i class="bi bi-cart3"></i> Кошница
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                0
-                            </span>
-                        </a> *@
+                     
 
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
                         {
@@ -197,23 +183,7 @@
     </header>
 
     <main class="main-wrapper">
-        @* <div>
-            @{
-                var controller = ViewContext.RouteData.Values["controller"]?.ToString();
-                var action = ViewContext.RouteData.Values["action"]?.ToString();
-            }
-
-            @if (!(controller == "Home" && action == "Index") &&
-                        !Context.Request.Path.Value.Contains("/Identity/Account/Login") &&
-                        !Context.Request.Path.Value.Contains("/Identity/Account/Register"))
-            {
-                <div class="container mt-5 mb-4 text-start">
-                    <button onclick="history.back()" class="btn btn-outline-primary rounded-pill px-3 back-btn">
-                        ← Назад
-                    </button>
-                </div>
-            }
-        </div> *@
+       
         <div class="container">
 
             @RenderBody()

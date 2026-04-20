@@ -146,77 +146,10 @@
 </div>
 
 
-<div class="row g-4">
 
 
-    <div class="col-lg-6">
 
-        <div class="card shadow-sm border-0 h-100">
-
-            <div class="card-body">
-
-                <h4 class="mb-3">Последни покупки</h4>
-
-                @if (Model.RecentPurchases.Any())
-                {
-
-                    <table class="table table-striped align-middle">
-
-                        <thead>
-                            <tr>
-                                <th>Събитие</th>
-                                <th>Потребител</th>
-                                <th>Брой</th>
-                                <th>Сума</th>
-                                <th>Платено на</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-
-                            @foreach (var item in Model.RecentPurchases)
-                            {
-
-                                <tr>
-
-                                    <td>@item.EventTitle</td>
-
-                                    <td>
-                                        <div>@item.UserName</div>
-                                        <small class="text-muted">
-                                            @item.UserEmail
-                                        </small>
-                                    </td>
-
-                                    <td>@item.Quantity</td>
-
-                                    <td>
-                                        @item.TotalPrice.ToString("F2") EUR
-                                    </td>
-
-                                    <td>
-                                        @(item.PaidAt?.ToString("dd.MM.yyyy HH:mm") ?? "-")
-                                    </td>
-
-                                </tr>
-
-                            }
-
-                        </tbody>
-
-                    </table>
-
-                }
-                else
-                {
-                    <p>Няма последни покупки.</p>
-                }
-
-            </div>
-
-        </div>
-
-    </div>
+    
 
 
 
@@ -280,4 +213,3 @@
     </div>
 
 
-</div>
