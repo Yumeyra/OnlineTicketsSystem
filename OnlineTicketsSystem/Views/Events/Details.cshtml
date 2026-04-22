@@ -3,6 +3,7 @@
 
 @model OnlineTicketsSystem.ViewModels.EventDetailsViewModel
 
+
 @{
     ViewData["Title"] = "Детайли за събитие";
     bool isPast = Model.Event.Date.Date < DateTime.Today;
@@ -71,6 +72,18 @@
                                 <div class="event-info-value">@Model.Event.Date.ToString("dd.MM.yyyy")</div>
                             </div>
                         </div>
+
+
+                            <div class="col-sm-6">
+                                <div class="p-3 bg-light rounded-4 h-100">
+                                    <div class="event-info-label">Час</div>
+                                    <div class="event-info-value">
+                                        @Model.Event.StartTime?.ToString("hh\\:mm")
+                                    </div>
+                                </div>
+                            </div>
+
+
 
                         <div class="col-sm-6">
                             <div class="p-3 bg-light rounded-4 h-100">
@@ -221,6 +234,56 @@
             </div>
         }
     </div>
+    @if (Model.RelatedEvents != null && Model.RelatedEvents.Any())
+    {
+        <div class="mt-5">
+            <h2 class="fw-bold mb-3">Още от тази категория</h2>
+
+            <div class="row g-4">
+                @foreach (var ev in Model.RelatedEvents)
+                {
+                    <div class="col-md-4 fade-in">
+                        <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden ">
+
+                            <img src="@ev.ImageUrl"
+                                 alt="@ev.Title"
+                                 class="card-img-top"
+                                 style="height: 200px; object-fit: cover;" />
+
+                            <div class="card-body">
+                                <h5 class="fw-bold">@ev.Title</h5>
+
+                                <div class="text-muted small mb-2">
+                                    @ev.Date.ToString("dd.MM.yyyy")
+                                    @if (ev.StartTime.HasValue)
+                                    {
+                                        @(" • " + ev.StartTime.Value.ToString("hh\\:mm"))
+                                    }
+                                </div>
+
+                                <a asp-controller="Events"
+                                   asp-action="Details"
+                                   asp-route-id="@ev.Id"
+                                   class="btn btn-outline-primary rounded-pill px-3">
+                                    Детайли
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    <div class="mt-3">
+        <a asp-controller="Events"
+           asp-action="Index"
+           asp-route-category="@Model.Event.Category?.Name"
+           class="btn btn-outline-secondary rounded-pill px-4">
+            Виж всички от категорията
+        </a>
+    </div>
+
+
 
     <!-- Add review -->
     <div class="mt-5">

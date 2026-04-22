@@ -1,4 +1,5 @@
-﻿using OnlineTicketsSystem.ViewModels;
+﻿using OnlineTicketsSystem.Models;
+using OnlineTicketsSystem.ViewModels;
 using System.Threading.Tasks;
 
 namespace OnlineTicketsSystem.Services.Interfaces
@@ -13,5 +14,7 @@ namespace OnlineTicketsSystem.Services.Interfaces
             int page);
 
         Task<EventDetailsViewModel?> GetEventDetailsAsync(int id, string? userId);
+        Task<List<Event>> GetRelatedEventsAsync(int categoryId, int currentEventId);
+
     }
 }

@@ -16,7 +16,10 @@ namespace OnlineTicketsSystem.ViewModels
         public List<Review> Reviews { get; set; } = new();
 
         // Permissions
-        public bool CanReview { get; set; }          // има ли платен билет
-        public bool UserHasReviewed { get; set; }    // вече писал ли е
+        public bool CanReview { get; set; }          
+        public bool UserHasReviewed { get; set; }
+        //public TimeSpan StartTime { get; set; }
+
+        public List<Event> RelatedEvents { get; set; } = new();
     }
 }

@@ -42,7 +42,7 @@ namespace OnlineTicketsSystem.Data.Seed
 
           new("Джаз вечер под тепетата", "Изискана джаз програма с модерни и класически изпълнения.", "Пловдив", "Дом на културата Борис Христов", new DateTime(2026, 5, 23, 20, 0, 0), 420, "Концерт", 17.50m, "/uploads/events/jazz-plovdiv.jpg"),
           new("Сценична комедия „Късен влак“", "Забавна история с неочаквани обрати и силно сценично присъствие.", "Пловдив", "Драматичен театър Пловдив", new DateTime(2026, 5, 30, 19, 0, 0), 260, "Комедия", 13.90m, "/uploads/events/comedy-plovdiv.jpg"),
-          new("Филмова вечер: Незабравимо лято", "Романтична филмова история, подходяща за вечер с приятели.", "Пловдив", "Cinema City Plovdiv", new DateTime(2026, 6, 1, 20, 0, 0), 140, "Кино", 8.90m, "/uploads/events/cinema-plovdiv.jpg"),
+          new("Филмова вечер: Незабравимо лято", "Романтична филмова история, подходяща за вечер с приятели.", "Пловдив", "Cinema City Plovdiv", new DateTime(2026, 6, 1, 20, 0, 0), 140, "Кино", 8.90m, "/uploads/events/plowdiv-cinema.jpg"),
           new("Балкански баскетболен турнир", "Турнир с участници от няколко балкански държави.", "Пловдив", "Колодрум Пловдив", new DateTime(2026, 6, 10, 17, 0, 0), 900, "Спорт", 15.00m, "/uploads/events/basketball-plovdiv.jpg"),
          new("Детски празник: Приказен ден", "Събитие за деца с анимация, игри и сценична програма.", "Пловдив", "Дом на културата Борис Христов", new DateTime(2026, 6, 15, 11, 0, 0), 280, "Детски събития", 9.50m, "/uploads/events/kids-plovdiv.jpg"),
 
@@ -194,6 +194,7 @@ new("Фестивал на уличната храна",
                         CityId = city.Id,
                         Venue = seed.Venue,
                         Date = seed.Date,
+                        StartTime = seed.Date.TimeOfDay,   // ← ТУК ДОБАВЯШ ЧАСА
                         Capacity = seed.Capacity,
                         ImageUrl = seed.ImageUrl,
                         CategoryId = category.Id,
@@ -201,6 +202,7 @@ new("Фестивал на уличната храна",
                         IsDeleted = false,
                         DeletedAt = null
                     });
+
                 }
                 else
                 {
@@ -209,6 +211,7 @@ new("Фестивал на уличната храна",
                     existingEvent.CityId = city.Id;
                     existingEvent.Venue = seed.Venue;
                     existingEvent.Date = seed.Date;
+                    existingEvent.StartTime = seed.Date.TimeOfDay;
                     existingEvent.Capacity = seed.Capacity;
                     existingEvent.ImageUrl = seed.ImageUrl;
                     existingEvent.CategoryId = category.Id;

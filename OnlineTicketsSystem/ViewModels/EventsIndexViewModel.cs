@@ -7,6 +7,8 @@ namespace OnlineTicketsSystem.ViewModels
     {
         public List<Event> Upcoming { get; set; } = new();
         public List<Event> Past { get; set; } = new();
+        public TimeSpan StartTime { get; set; }
+
 
         public string? SearchTerm { get; set; }
         public string? SelectedCity { get; set; }

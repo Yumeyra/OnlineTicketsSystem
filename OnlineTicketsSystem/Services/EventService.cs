@@ -1,7 +1,8 @@
-﻿using OnlineTicketsSystem.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineTicketsSystem.Data;
+using OnlineTicketsSystem.Models;
 using OnlineTicketsSystem.Services.Interfaces;
 using OnlineTicketsSystem.ViewModels;
-using Microsoft.EntityFrameworkCore;
 
 namespace OnlineTicketsSystem.Services
 {
@@ -97,6 +98,8 @@ namespace OnlineTicketsSystem.Services
             var past = await pastQuery
                 .Take(6)
                 .ToListAsync();
+            
+
 
             return new EventsIndexViewModel
             {
@@ -142,6 +145,8 @@ namespace OnlineTicketsSystem.Services
             var reviews = await reviewsQuery
                 .OrderByDescending(r => r.CreatedAt)
                 .ToListAsync();
+            var related = await GetRelatedEventsAsync(ev.CategoryId, ev.Id);
+
 
             bool canReview = false;
             bool userHasReviewed = false;
@@ -167,8 +172,23 @@ namespace OnlineTicketsSystem.Services
                 ReviewsCount = reviewsCount,
                 AverageRating = averageRating,
                 CanReview = canReview,
-                UserHasReviewed = userHasReviewed
+                UserHasReviewed = userHasReviewed,
+
+                // ⭐ Ново
+                RelatedEvents = related
             };
+
         }
+        public async Task<List<Event>> GetRelatedEventsAsync(int categoryId, int currentEventId)
+        {
+            return await _context.Events
+                .Where(e => e.CategoryId == categoryId &&
+                            e.Id != currentEventId &&
+                            !e.IsDeleted)
+                .OrderBy(e => e.Date)
+                .Take(3)
+                .ToListAsync();
+        }
+
     }
 }

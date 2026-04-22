@@ -23,8 +23,10 @@ namespace OnlineTicketsSystem.Models
 
         [Required]
             public DateTime Date { get; set; }
+        [Required]
+        public TimeSpan? StartTime { get; set; }
 
-            
+
         [Required]
         [Range(1, 100000)]
         public int Capacity { get; set; }

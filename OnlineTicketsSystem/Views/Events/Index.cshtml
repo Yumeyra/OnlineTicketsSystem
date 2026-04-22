@@ -127,7 +127,26 @@
                                             @(e.Category?.Name ?? "-")
                                         </span>
                                     </td>
-                                    <td>@e.Date.ToString("dd.MM.yyyy")</td>
+                                    @* <td>@e.Date.ToString("dd.MM.yyyy")</td> *@
+                                    <td>
+                                        <div class="p-3 bg-light rounded-4 d-inline-block me-2">
+                                            <div class="event-info-label">Дата</div>
+                                            <div class="event-info-value">@e.Date.ToString("dd.MM.yyyy")</div>
+                                        </div>
+
+                                        @if (e.StartTime.HasValue)
+                                        {
+                                            <div class="p-3 bg-light rounded-4 d-inline-block">
+                                                <div class="event-info-label">Час</div>
+                                                <div class="event-info-value">@e.StartTime.Value.ToString("hh\\:mm")</div>
+                                            </div>
+                                        }
+                                    </td>
+
+
+
+
+
                                     <td class="fw-bold text-success">@e.Price.ToString("0.00") EUR</td>
                                     <td class="text-end pe-4">
                                         <a asp-controller="Events"
@@ -223,7 +242,26 @@
                                             @(e.Category?.Name ?? "-")
                                         </span>
                                     </td>
-                                    <td>@e.Date.ToString("dd.MM.yyyy")</td>
+                                    @* <td>@e.Date.ToString("dd.MM.yyyy")</td> *@
+                                    <td>
+                                        <div class="p-3 bg-light rounded-4 d-inline-block me-2">
+                                            <div class="event-info-label">Дата</div>
+                                            <div class="event-info-value">@e.Date.ToString("dd.MM.yyyy")</div>
+                                        </div>
+
+                                        @if (e.StartTime.HasValue)
+                                        {
+                                            <div class="p-3 bg-light rounded-4 d-inline-block">
+                                                <div class="event-info-label">Час</div>
+                                                <div class="event-info-value">@e.StartTime.Value.ToString("hh\\:mm")</div>
+                                            </div>
+                                        }
+                                    </td>
+
+
+
+
+
                                     <td class="fw-bold text-success">@e.Price.ToString("0.00") EUR</td>
                                     <td class="text-end pe-4">
                                         <a asp-controller="Events"
