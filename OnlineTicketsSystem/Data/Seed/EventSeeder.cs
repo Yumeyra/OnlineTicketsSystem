@@ -194,7 +194,7 @@ new("Фестивал на уличната храна",
                         CityId = city.Id,
                         Venue = seed.Venue,
                         Date = seed.Date,
-                        StartTime = seed.Date.TimeOfDay,   // ← ТУК ДОБАВЯШ ЧАСА
+                        StartTime = seed.Date.TimeOfDay,   
                         Capacity = seed.Capacity,
                         ImageUrl = seed.ImageUrl,
                         CategoryId = category.Id,

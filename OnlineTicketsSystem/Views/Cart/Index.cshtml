@@ -63,10 +63,7 @@ else
         </form>
 
         
-        @* <form asp-controller="Cart" asp-action="Checkout" method="post">
-            @Html.AntiForgeryToken()
-            <button type="submit" class="btn btn-success">Плати (симулация)</button>
-        </form> *@
+       
         @if (User.Identity != null && User.Identity.IsAuthenticated)
         {
             <form asp-controller="Cart" asp-action="Checkout" method="post">

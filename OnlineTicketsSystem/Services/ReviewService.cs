@@ -16,11 +16,11 @@ namespace OnlineTicketsSystem.Services
 
         public async Task<bool> CanReviewAsync(string userId, int eventId)
         {
-            // Съществува ли събитието
+            
             var evExists = await _context.Events.AnyAsync(e => e.Id == eventId);
             if (!evExists) return false;
 
-            // Само с платен билет
+           
             var hasPaidTicket = await _context.Tickets.AnyAsync(t =>
                 t.UserId == userId &&
                 t.EventId == eventId &&
@@ -28,7 +28,7 @@ namespace OnlineTicketsSystem.Services
 
             if (!hasPaidTicket) return false;
 
-            // Вече оставен отзив?
+           
             var already = await _context.Reviews
                 .IgnoreQueryFilters()
                 .AnyAsync(r => r.UserId == userId && r.EventId == eventId && !r.IsDeleted);
@@ -50,7 +50,7 @@ namespace OnlineTicketsSystem.Services
             if (!hasPaidTicket)
                 return "Можеш да оставиш отзив само ако имаш платен билет за това събитие.";
 
-            // Вече оставен отзив?
+            
             var already = await _context.Reviews
                 .IgnoreQueryFilters()
                 .AnyAsync(r => r.UserId == userId && r.EventId == eventId && !r.IsDeleted);
@@ -68,7 +68,7 @@ namespace OnlineTicketsSystem.Services
                 Rating = rating,
                 Comment = string.IsNullOrWhiteSpace(comment) ? null : comment.Trim(),
                 CreatedAt = DateTime.UtcNow,
-                IsApproved = true // ако искаш админ одобрение => false
+                IsApproved = true
             };
 
             _context.Reviews.Add(review);

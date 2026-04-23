@@ -24,9 +24,7 @@ namespace OnlineTicketsSystem.Data
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
             var env = services.GetRequiredService<IWebHostEnvironment>();
 
-            // =========================
-            // Cities (Name|Slug|Region)
-            // =========================
+            
             try
             {
                 var path1 = Path.Combine(env.ContentRootPath, "Data", "Seed", "cities-bg.txt");
@@ -68,7 +66,7 @@ namespace OnlineTicketsSystem.Data
                         var slug = parts[1];
                         var region = parts[2];
 
-                        // търсим по Slug (уникален)
+                      
                         var existing = await context.Cities
                             .IgnoreQueryFilters()
                             .FirstOrDefaultAsync(c => c.Slug == slug);
@@ -106,46 +104,19 @@ namespace OnlineTicketsSystem.Data
                 Console.WriteLine("[Cities seed] EXCEPTION: " + ex);
             }
 
-            // ==========
-            // Categories
-            // ==========
-            //if (!context.Categories.Any())
-            //{
-            //    var categories = new Category[]
-            //    {
-            //        new Category { Name = "Театър" },
-            //        new Category { Name = "Концерт" },
-            //        new Category { Name = "Спорт" },
-            //        new Category { Name = "Кино" },
-            //         new Category { Name = "Фестивал" },
-            //         new Category { Name =  "Комедия" },
-            //         new Category { Name = "Опера и балет"},
-            //         new Category { Name = "Детски събития" },
-            //           new Category { Name =  "Стендъп" },
-            //             new Category { Name =     "Изложба" },
-
-
-
-            //    };
-            //    context.Categories.AddRange(categories);
-            //    await context.SaveChangesAsync();
-            //}
+         
             await CategorySeeder.SeedAsync(context);
 
            
             await EventSeeder.SeedAsync(context);
-            // =====
-            // Roles
-            // =====
+      
             if (!await roleManager.RoleExistsAsync("Admin"))
                 await roleManager.CreateAsync(new IdentityRole("Admin"));
 
             if (!await roleManager.RoleExistsAsync("User"))
                 await roleManager.CreateAsync(new IdentityRole("User"));
 
-            // ============
-            // Admin user
-            // ============
+        
             var adminEmail = "admin@tickets.com";
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
@@ -169,9 +140,7 @@ namespace OnlineTicketsSystem.Data
             if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
                 await userManager.AddToRoleAsync(adminUser, "Admin");
 
-            // ==============
-            // Test user
-            // ==============
+       
             var existingUser = await userManager.FindByEmailAsync("test@example.com");
             IdentityUser testUser;
 
@@ -196,9 +165,7 @@ namespace OnlineTicketsSystem.Data
                 testUser = existingUser;
             }
 
-            // ============
-            // Test tickets
-            // ============
+         
             if (!context.Tickets.Any())
             {
                 var firstEvent = context.Events.First();

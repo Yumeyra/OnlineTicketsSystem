@@ -25,7 +25,7 @@ namespace OnlineTicketsSystem.Services
             var today = DateTime.Today;
             List<string> citiesInRegion = new();
 
-            // 📍 Cities in region
+          
             if (!string.IsNullOrWhiteSpace(selectedRegion))
             {
                 citiesInRegion = await _context.Cities
@@ -41,7 +41,7 @@ namespace OnlineTicketsSystem.Services
                 .Where(e => e.Date >= today)
                 .AsQueryable();
 
-            // 🔍 Filters
+         
             if (categoryId.HasValue)
                 query = query.Where(e => e.CategoryId == categoryId.Value);
 
@@ -63,25 +63,25 @@ namespace OnlineTicketsSystem.Services
                     query = query.Where(e => e.Price >= 20);
             }
 
-            // 📅 Upcoming events
+           
             var upcoming = await query
                 .OrderBy(e => e.Date)
                 .Take(12)
                 .ToListAsync();
 
-            // 🏷️ Categories
+           
             var categories = await _context.Categories
                 .OrderBy(c => c.Name)
                 .ToListAsync();
 
-            // 🌍 Regions
+            
             var regions = await _context.Cities
                 .Select(c => c.Region)
                 .Distinct()
                 .OrderBy(r => r)
                 .ToListAsync();
 
-            // 🔥 Popular cities (fixed order)
+
             var preferredCityOrder = new List<string>
             {
                 "София", "Пловдив", "Варна", "Бургас",
@@ -96,7 +96,7 @@ namespace OnlineTicketsSystem.Services
                 .OrderBy(c => preferredCityOrder.IndexOf(c.Name))
                 .ToList();
 
-            // 🖼️ Hero images
+          
             var heroImages = await _context.Events
                 .Where(e => !string.IsNullOrWhiteSpace(e.ImageUrl))
                 .Select(e => new
@@ -137,7 +137,7 @@ namespace OnlineTicketsSystem.Services
                 Regions = regions,
                 CitiesInRegion = citiesInRegion,
 
-                //HeroImages = heroImages
+              
             };
         }
     }

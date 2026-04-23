@@ -101,56 +101,7 @@ namespace OnlineTicketsSystem.Services
             await _context.SaveChangesAsync();
         }
 
-        //public async Task<AdminDashboardViewModel> GetDashboardDataAsync()
-        //{
-
-        //    var now = DateTime.Now;
-
-        //    var totalEvents = await _context.Events.CountAsync();
-
-        //    var paidTickets = _context.Tickets.Where(t => t.IsPaid);
-
-        //    var totalSoldTickets = await paidTickets.SumAsync(t => (int?)t.Quantity) ?? 0;
-        //    var totalRevenue = await paidTickets.SumAsync(t => (decimal?)(t.UnitPrice * t.Quantity)) ?? 0;
-
-        //    var upcomingEvents = await _context.Events.CountAsync(e => e.Date >= now);
-        //    var pastEvents = await _context.Events.CountAsync(e => e.Date < now);
-
-        //    var eventStats = await _context.Events
-        //        .Select(e => new TopEventViewModel
-        //        {
-        //            EventId = e.Id,
-        //            Title = e.Title,
-        //            Capacity = e.Capacity,
-        //            SoldTickets = _context.Tickets
-        //                .Where(t => t.EventId == e.Id && t.IsPaid)
-        //                .Sum(t => (int?)t.Quantity) ?? 0,
-        //            Revenue = _context.Tickets
-        //                .Where(t => t.EventId == e.Id && t.IsPaid)
-        //                .Sum(t => (decimal?)(t.UnitPrice * t.Quantity)) ?? 0
-        //        })
-        //        .ToListAsync();
-
-        //    foreach (var e in eventStats)
-        //    {
-        //        e.RemainingSeats = Math.Max(0, e.Capacity - e.SoldTickets);
-        //    }
-
-        //    var topEvents = eventStats
-        //        .OrderByDescending(e => e.SoldTickets)
-        //        .Take(5)
-        //        .ToList();
-
-        //    return new AdminDashboardViewModel
-        //    {
-        //        TotalEvents = totalEvents,
-        //        TotalSoldTickets = totalSoldTickets,
-        //        TotalRevenue = totalRevenue,
-        //        UpcomingEvents = upcomingEvents,
-        //        PastEvents = pastEvents,
-        //        TopEvents = topEvents
-        //    };
-        //}
+       
         public async Task<AdminDashboardViewModel> GetDashboardDataAsync()
         {
             var now = DateTime.Now;
@@ -190,7 +141,7 @@ namespace OnlineTicketsSystem.Services
                 .Take(5)
                 .ToList();
 
-            // ⭐ ТУК ДОБАВЯМЕ ОБЩО ПОТРЕБИТЕЛИ
+        
             var totalUsers = await _userManager.Users.CountAsync();
 
             return new AdminDashboardViewModel
@@ -201,11 +152,11 @@ namespace OnlineTicketsSystem.Services
                 UpcomingEvents = upcomingEvents,
                 PastEvents = pastEvents,
                 TopEvents = topEvents,
-                TotalUsers = totalUsers // ⭐ И ТУК ГО ВРЪЩАМЕ
+                TotalUsers = totalUsers
             };
         }
 
-        // 🔧 Helpers
+        
         private async Task<string> SavePosterAsync(IFormFile file, string title)
         {
             var uploadsDir = Path.Combine(_env.WebRootPath, "uploads", "events");

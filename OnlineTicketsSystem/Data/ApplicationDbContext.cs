@@ -36,17 +36,15 @@ namespace OnlineTicketsSystem.Data
             builder.Entity<Order>().HasQueryFilter(o => !o.IsDeleted);
             builder.Entity<OrderItem>().HasQueryFilter(oi => !oi.IsDeleted);
 
-            // Precision
             builder.Entity<Ticket>().Property(t => t.UnitPrice).HasPrecision(18, 2);
             builder.Entity<Order>().Property(o => o.TotalAmount).HasPrecision(18, 2);
             builder.Entity<OrderItem>().Property(oi => oi.UnitPrice).HasPrecision(18, 2);
 
-            // Unique favorite
             builder.Entity<Favorite>()
                 .HasIndex(f => new { f.UserId, f.EventId })
                 .IsUnique();
 
-            // ✅ Unique city per region
+      
             builder.Entity<City>()
                 .HasIndex(c => new { c.Name, c.Region })
                 .IsUnique();

@@ -28,7 +28,7 @@ namespace OnlineTicketsSystem.Services
                 .Include(e => e.Category)
                 .AsQueryable();
 
-            // 🔍 Filters
+      
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
                 var term = searchTerm.Trim();
@@ -58,7 +58,7 @@ namespace OnlineTicketsSystem.Services
 
             var today = DateTime.Today;
 
-            // 📍 Cities
+         
             var cities = await _context.Events
                 .Select(e => e.City)
                 .Where(c => !string.IsNullOrEmpty(c))
@@ -66,7 +66,7 @@ namespace OnlineTicketsSystem.Services
                 .OrderBy(c => c)
                 .ToListAsync();
 
-            // 🏷️ Categories
+          
             var categories = await _context.Categories
                 .Select(c => c.Name)
                 .Where(n => !string.IsNullOrEmpty(n))
@@ -74,7 +74,6 @@ namespace OnlineTicketsSystem.Services
                 .OrderBy(n => n)
                 .ToListAsync();
 
-            // 📅 Upcoming & Past
             var upcomingQuery = query
                 .Where(e => e.Date.Date >= today)
                 .OrderBy(e => e.Date);
@@ -174,7 +173,7 @@ namespace OnlineTicketsSystem.Services
                 CanReview = canReview,
                 UserHasReviewed = userHasReviewed,
 
-                // ⭐ Ново
+               
                 RelatedEvents = related
             };
 
