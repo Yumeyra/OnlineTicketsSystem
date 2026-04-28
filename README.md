@@ -42,7 +42,9 @@ EventAura е уеб приложение за управление и прода
 
 OnlineTicketsSystem – основният проект с контролери, модели, изгледи и логика
 
-docs – папка с документация
-
 README.md – описание на проекта
+
+Направено от:
+Юмейра Мустафова Инова  
+GitHub: https://github.com/Yumeyra/OnlineTicketsSystem
 
